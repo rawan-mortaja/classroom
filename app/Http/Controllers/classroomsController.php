@@ -35,9 +35,20 @@ class classroomsController extends Controller
         // $classrooms = Classroom::orderBy('Created_at', 'DESC')->get(); // return collection of Classroom
         // dd($classrooms);
 
-        $classrooms = DB::table('classrooms')
-            ->whereNull('deleted_at')
-            ->orderBy('Created_at', 'DESC')->get();
+        // $classrooms = DB::table('classrooms')
+        //     ->whereNull('deleted_at')
+        //     ->orderBy('Created_at', 'DESC')->get();
+
+        // Use Local Scope
+
+        $classrooms = Classroom::active()
+            ->recent()
+            ->orderBy('Created_at', 'DESC')
+            ->where('user_id' , '=' , Auth::id())
+            // ->withoutGlobalScope('user')
+            // ->withoutGlobalScopes()
+            ->get();
+
 
         //  session('success'); // return value session in the success
         //  session()->get('success');
@@ -145,6 +156,7 @@ class classroomsController extends Controller
         // ]); //تستخدم للحقول الغير موجودة بالجدول
 
         $validated['code'] = Str::random(6);
+        $validated['user_id'] = Auth::user()->id; // Auth::id(), $request->user()->id()
 
         // $validated['user_id'] = Auth::id(); // Auth::user()->id , $request
         $classroom = Classroom::create($validated);
@@ -160,10 +172,11 @@ class classroomsController extends Controller
         // PRG : Post Redirect Get
         return redirect()->route('classrooms.index');
     }
-    public function show(Classroom $classroom)
+    public function show($id)
     {
         // $classroom = classroom::where('id' , '=' , $id)->first();
         // $classroom = Classroom::withTrashed()->findOrFail($id);
+        $classroom = Classroom::where('user_id' , Auth::id())->findOrFail($id);
 
         return view('classrooms.show')
             ->with([

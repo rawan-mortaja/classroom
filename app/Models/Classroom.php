@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Scopes\UserClassroomScope;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -17,7 +18,7 @@ class Classroom extends Model
 
     protected $fillable = [
         'name', 'section', 'subject', 'room', 'theme',
-        'cover_image_path', 'code'
+        'cover_image_path', 'code' , 'user_id' , 
     ]; // تحديد المسموح (white list)
 
 
@@ -46,6 +47,22 @@ class Classroom extends Model
             return;
         }
         return Storage::disk(Classroom::$disk)->delete($path);
+    }
+
+    public function scopeActive(Builder $query)
+    {
+        $query->where('status', '=', 'active');
+    }
+    //لما اجي استدعيها بستدعيها ب اسم active من غير scope
+
+    public function scopeRecent(Builder $query)
+    {
+        $query->orderBy('updated_at', 'DESC');
+    }
+
+    public function scopeStatus(Builder $query, $status = 'active')
+    {
+        $query->where('status', '=', $status);
     }
 
     public static function booted()
