@@ -46,6 +46,9 @@
                             <a class="nav-link disabled">Disabled</a>
                         </li>
                     </ul>
+                    <div>
+                        {{ Auth::user()}}
+                    </div>
                     <form class="d-flex" role="search">
                         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                         <button class="btn btn-outline-success" type="submit">Search</button>

@@ -4,8 +4,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>@yield('title' , config('app.name'))</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <title>@yield('title', config('app.name'))</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     @yield('styles')
 </head>
 
@@ -13,8 +14,10 @@
     <header>
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container">
-                <a class="navbar-brand" href="{{ route('classrooms.index') }}">{{ config('app.name' , 'Laravel')}}</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <a class="navbar-brand" href="{{ route('classrooms.index') }}">{{ config('app.name', 'Laravel') }}</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -26,7 +29,8 @@
                             <a class="nav-link" href="#">Link</a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
                                 Dropdown
                             </a>
                             <ul class="dropdown-menu">
@@ -42,6 +46,9 @@
                             <a class="nav-link disabled">Disabled</a>
                         </li>
                     </ul>
+                    <div>
+                        {{ Auth::user() }}
+                    </div>
                     <form class="d-flex" role="search">
                         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                         <button class="btn btn-outline-success" type="submit">Search</button>
@@ -62,22 +69,27 @@
                     <use xlink:href="#bootstrap"></use>
                 </svg>
             </a>
-            <span class="mb-3 mb-md-0 text-body-secondary">© 2023 {{ config('app.name')}}, Inc</span>
+            <span class="mb-3 mb-md-0 text-body-secondary">© 2023 {{ config('app.name') }}, Inc</span>
         </div>
 
         <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
-            <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24">
+            <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24"
+                        height="24">
                         <use xlink:href="#twitter"></use>
                     </svg></a></li>
-            <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24">
+            <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24"
+                        height="24">
                         <use xlink:href="#instagram"></use>
                     </svg></a></li>
-            <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24">
+            <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24"
+                        height="24">
                         <use xlink:href="#facebook"></use>
                     </svg></a></li>
         </ul>
     </footer>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous">
+    </script>
     @stack('scripts')
 </body>
 

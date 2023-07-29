@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\classroomsController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TopicsController;
 use Illuminate\Support\Facades\Route;
@@ -74,6 +75,8 @@ Route::resource('/classrooms', classroomsController::class)
 Route::resources([
     'topics' => TopicsController::class,
     'classrooms' => classroomsController::class,
+], [
+    'middleware' => ['auth'],
 ]);
 
 
@@ -107,19 +110,21 @@ Route::resources([
 //     ->name('topics.destroy');
 
 
-Route::get('/login', [LoginController::class, 'create'])->name('login');
-Route::post('/login', [LoginController::class, 'store']);
+Route::get('/loginn', [LoginController::class, 'create'])
+    ->name('loginm')
+    ->middleware('guest');
+Route::post('/login', [LoginController::class, 'store'])
+    ->middleware('guest');
 
 // Route::middleware(['auth'])->group(function(){
 //     Route::prefix('/topics/trashed')
-                // ->as('topics')
-                // ->controller(TopicsController::class)
-            //     // ->group(function(){
-            // Route::get('/topics/trashed' ,[TopicsController::class, 'trashed'])->name('topics.trashed');
-            // Route::put('/topics/trashed/{topic}' ,[TopicsController::class,'restore'])->name('topics.restore');
-            // Route::delete('/topics/trashed/{topic}' , [TopicsController::class,'forceDelete'])->name('topics.force-delete');
-    //     });
-    // });
+// ->as('topics')
+// ->controller(TopicsController::class)
+//     // ->group(function(){
+// Route::get('/topics/trashed' ,[TopicsController::class, 'trashed'])->name('topics.trashed');
+// Route::put('/topics/trashed/{topic}' ,[TopicsController::class,'restore'])->name('topics.restore');
+// Route::delete('/topics/trashed/{topic}' , [TopicsController::class,'forceDelete'])->name('topics.force-delete');
+//     });
+// });
 
-require __DIR__.'/auth.php';
-
+require __DIR__ . '/auth.php';
