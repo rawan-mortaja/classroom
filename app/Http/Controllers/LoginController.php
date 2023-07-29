@@ -35,7 +35,7 @@ class LoginController extends Controller
 
 
         if ($result) {
-            return redirect()->route('classroom.index');
+            return redirect()->intended('/');
         }
         // $user = User::where('email', '=', $request->email)->first();
         // if ($user &&  Hash::check($request->password, $user->password)) {

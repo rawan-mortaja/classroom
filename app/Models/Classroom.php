@@ -5,11 +5,12 @@ namespace App\Models;
 use App\Models\Scopes\UserClassroomScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
 
 class Classroom extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
 
     public static  string $disk = 'public';
@@ -41,7 +42,9 @@ class Classroom extends Model
 
     public static function deleteCoverImage($path)
     {
-
+        if (!$path || !Storage::disk(Classroom::$disk)->exists($path)) {
+            return;
+        }
         return Storage::disk(Classroom::$disk)->delete($path);
     }
 

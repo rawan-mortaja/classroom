@@ -10,6 +10,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Testing\File;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
@@ -21,14 +22,22 @@ use Illuminate\Validation\ValidationException;
 
 class classroomsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth'); // ->only('index')
+    }
     //
     public function index(Request $request): Renderable
     {
         // return response : view , redirect , json-data , file , String
         // return 'Hello World!';
 
-        $classrooms = Classroom::orderBy('Created_at', 'DESC')->get(); // return collection of Classroom
+        // $classrooms = Classroom::orderBy('Created_at', 'DESC')->get(); // return collection of Classroom
         // dd($classrooms);
+
+        $classrooms = DB::table('classrooms')
+            ->whereNull('deleted_at')
+            ->orderBy('Created_at', 'DESC')->get();
 
         //  session('success'); // return value session in the success
         //  session()->get('success');
@@ -151,10 +160,10 @@ class classroomsController extends Controller
         // PRG : Post Redirect Get
         return redirect()->route('classrooms.index');
     }
-    public function show($id)
+    public function show(Classroom $classroom)
     {
         // $classroom = classroom::where('id' , '=' , $id)->first();
-        $classroom = Classroom::findOrFail($id);
+        // $classroom = Classroom::withTrashed()->findOrFail($id);
 
         return view('classrooms.show')
             ->with([
@@ -246,11 +255,11 @@ class classroomsController extends Controller
 
 
         // $classroom->fill($request->all())->save();
-        Session::flash('success' , 'Classroom update');
-        Session::flash('error' , 'Error!' );
+        Session::flash('success', 'Classroom update');
+        Session::flash('error', 'Error!');
         return Redirect::route('classrooms.index');
-            // ->with('success', 'Classroom updated')
-            // ->with('error', 'Error');
+        // ->with('success', 'Classroom updated')
+        // ->with('error', 'Error');
     }
 
     public function destroy(Classroom $classroom)
@@ -265,9 +274,42 @@ class classroomsController extends Controller
 
         //Flash Messages | تعتمد على seesion
 
-        Classroom::deleteCoverImage($classroom->cover_image_path);
+        // Classroom::deleteCoverImage($classroom->cover_image_path);
 
         return redirect(route('classrooms.index'))
             ->with('success', 'Classroom deleted');
+    }
+
+    public function trashed()
+    {
+        $classroom = Classroom::onlyTrashed()
+            ->latest('deleted_at')
+            ->get();
+        //onlyTrashed() ; فقط المحذوف(ألموجود بالسلة)
+        return view('classrooms.trashed', compact('classrooms'));
+    }
+
+    public function restore($id)
+    {
+        $classroom = Classroom::onlyTrashed()
+            ->findOrFail($id);
+        $classroom->restore();
+
+        return redirect()
+            ->route('classrooms.index')
+            ->with('success', "Classroom  ({ $classroom->name }) restores");
+    }
+
+    public function forceDelete($id)
+    {
+        $classroom = Classroom::withTrashed()->findOrFail($id);
+        //withTrashed() ; المحذوفة و غير محذوفة
+        $classroom->forceDelete();
+        Classroom::deleteCoverImage($classroom->cover_image_path);
+        //forceDelete(); حذف بشكل نهائي
+
+        return redirect()
+            ->route('classrooms.tarshed')
+            ->with('success', "Classroom  ({ $classroom->name }) deleted forever");
     }
 }

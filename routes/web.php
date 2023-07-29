@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -62,16 +62,17 @@ Route::middleware('auth')->group(function () {
 //     ->name('classrooms.destroy');
 
 
-Route::resource('/classrooms', classroomsController::class)
-    ->names([
-        // 'index' => 'classrooms/index',
-        // 'create' => 'classrooms/create',
-    ])
-    // ->parameters([
-    //     '{classroom}' => '{classroom:code}',
-    // ])
-    ->where(['classroom' => '/d+',]); //بعرفلي كل resource يلي تم استخدامها
+// Route::resource('/classrooms', classroomsController::class)
+//     ->names([
+//         // 'index' => 'classrooms/index',
+//         // 'create' => 'classrooms/create',
+//     ])
+//     // ->parameters([
+//     //     '{classroom}' => '{classroom:code}',
+//     // ])
+//     ->where(['classroom' => '/d+',]); //بعرفلي كل resource يلي تم استخدامها
 //بقدر استدعي اكتر من ريسورس بنفس الجملة
+
 Route::resources([
     'topics' => TopicsController::class,
     'classrooms' => classroomsController::class,
@@ -110,21 +111,39 @@ Route::resources([
 //     ->name('topics.destroy');
 
 
-Route::get('/loginn', [LoginController::class, 'create'])
-    ->name('loginm')
-    ->middleware('guest');
-Route::post('/login', [LoginController::class, 'store'])
-    ->middleware('guest');
+// Route::get('/loginn', [LoginController::class, 'create'])
+//     ->name('loginm')
+//     ->middleware('guest');
+// Route::post('/login', [LoginController::class, 'store'])
+//     ->middleware('guest');
 
-// Route::middleware(['auth'])->group(function(){
-//     Route::prefix('/topics/trashed')
-// ->as('topics')
-// ->controller(TopicsController::class)
-//     // ->group(function(){
-// Route::get('/topics/trashed' ,[TopicsController::class, 'trashed'])->name('topics.trashed');
-// Route::put('/topics/trashed/{topic}' ,[TopicsController::class,'restore'])->name('topics.restore');
-// Route::delete('/topics/trashed/{topic}' , [TopicsController::class,'forceDelete'])->name('topics.force-delete');
-//     });
-// });
+
+Route::middleware(['auth'])->group(function () {
+    Route::prefix('/classrooms/trashed')
+        ->as('classrooms')
+        ->controller(classroomsController::class)
+        ->group(function () {
+            Route::get('/', 'trashed')
+                ->name('trashed');
+            Route::put('/{classroom}', 'restore')
+                ->name('restore');
+            Route::delete('/{classroom}', 'forceDelete')
+                ->name('force-delete');
+        });
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::prefix('/topics/trashed')
+        ->as('topics')
+        ->controller(TopicsController::class)
+        ->group(function () {
+            Route::get('/', 'trashed')
+                ->name('trashed');
+            Route::put('/{topic}', 'restore')
+                ->name('restore');
+            Route::delete('/{topic}', 'forceDelete')
+                ->name('force-delete');
+        });
+});
 
 require __DIR__ . '/auth.php';

@@ -16,12 +16,26 @@
                         <img src="" class="card-img-top" alt="">
                         <div class="card-body">
                             <h5 class="card-title">{{ $topic->name }}</h5>
-                            <a href="{{ route('topics.store', $topic->id) }}" class="btn btn-sm btn-dark">Store</a>
-                            <form action="{{ route('topics.destroy', $topic->id) }}" method="post">
-                                @csrf
-                                @method('delete')
-                                <button type="submit" class="btn btn-sm btn-danger ">Delete</button>
-                            </form>
+
+                            <div class="text-center d-flex justify-content-between ">
+
+                                <form action="{{ route('topics.restore', $topic->id) }}" method="post"
+                                    class="d-inline-block">
+                                    @csrf
+                                    @method('put')
+                                    <button class="btn btn-success btn-sm text-white"
+                                        onclick="return confirm('Are you sure')">Restore</button>
+                                </form>
+
+                                <form action="{{ route('topics.force-delete', $topic->id) }}" method="post"
+                                    class="d-inline-block">
+                                    @csrf
+                                    @method('delete')
+                                    <button class="btn btn-danger btn-sm text-white"
+                                        onclick="return confirm('Are you sure')">Delete Forever</button>
+                                </form>
+
+                            </div>
                         </div>
                     </div>
                 </div>
