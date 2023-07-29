@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\classroomRequest;
 use App\Models\Classroom;
+use App\Models\Scopes\UserClassroomScope;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Contracts\View\View as BaseView;
 use Illuminate\Http\RedirectResponse;
@@ -45,7 +46,7 @@ class classroomsController extends Controller
             ->recent()
             ->orderBy('Created_at', 'DESC')
             ->where('user_id' , '=' , Auth::id())
-            // ->withoutGlobalScope('user')
+            // ->withoutGlobalScope(UserClassroomScope::class)
             // ->withoutGlobalScopes()
             ->get();
 

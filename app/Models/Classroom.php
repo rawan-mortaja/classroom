@@ -18,7 +18,7 @@ class Classroom extends Model
 
     protected $fillable = [
         'name', 'section', 'subject', 'room', 'theme',
-        'cover_image_path', 'code' , 'user_id' , 
+        'cover_image_path', 'code' , 'user_id' ,
     ]; // تحديد المسموح (white list)
 
 
