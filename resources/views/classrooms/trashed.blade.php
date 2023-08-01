@@ -25,21 +25,21 @@
             <div>
                 <br>
             </div>
-            @foreach ($classrooms as $classroom)
+            @foreach ($classroom as $classrooms)
                 <div class="col-3 mb-4">
                     <div class="card" style="width: 18rem;">
-                        @if ($classroom->cover_image_path)
-                            <img src="{{ asset('storage/' . $classroom->cover_image_path) }}" class="card-img-top"
+                        @if ($classrooms->cover_image_path)
+                            <img src="{{ asset('storage/' . $classrooms->cover_image_path) }}" class="card-img-top"
                                 style="height: 100px; object-fit: cover" alt="Classroom Cover Image">
                         @endif
 
                         <div class="card-body">
-                            <h5 class="card-title">{{ $classroom->name }}</h5>
-                            <p class="card-text">{{ $classroom->section }}-{{ $classroom->room }}</p>
+                            <h5 class="card-title">{{ $classrooms->name }}</h5>
+                            <p class="card-text">{{ $classrooms->section }}-{{ $classrooms->room }}</p>
 
                             <div class="text-center d-flex justify-content-between ">
 
-                                <form action="{{ route('classrooms.restore', $classroom->id) }}" method="post"
+                                <form action="{{ route('classrooms.restore', $classrooms->id) }}" method="post"
                                     class="d-inline-block">
                                     @csrf
                                     @method('put')
@@ -47,7 +47,7 @@
                                         onclick="return confirm('Are you sure')">Restore</button>
                                 </form>
 
-                                <form action="{{ route('classrooms.force-delete', $classroom->id) }}" method="post"
+                                <form action="{{ route('classrooms.forcedelete', $classrooms->id) }}" method="post"
                                     class="d-inline-block">
                                     @csrf
                                     @method('delete')

@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\classroomRequest;
 use App\Models\Classroom;
 use App\Models\Scopes\UserClassroomScope;
+use Exception;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Contracts\View\View as BaseView;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Testing\File;
@@ -15,6 +17,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
 use PhpParser\Builder\Class_;
 use Illuminate\Support\Str;
@@ -45,7 +48,7 @@ class classroomsController extends Controller
         $classrooms = Classroom::active()
             ->recent()
             ->orderBy('Created_at', 'DESC')
-            ->where('user_id' , '=' , Auth::id())
+            ->where('user_id', '=', Auth::id())
             // ->withoutGlobalScope(UserClassroomScope::class)
             // ->withoutGlobalScopes()
             ->get();
@@ -159,8 +162,20 @@ class classroomsController extends Controller
         $validated['code'] = Str::random(6);
         $validated['user_id'] = Auth::user()->id; // Auth::id(), $request->user()->id()
 
+        DB::beginTransaction();
+
+        // DB::transaction(function () use ($validated) {
+        //     $classroom = Classroom::create($validated);
+
+        //     DB::table('classroom_user')->insert([
+        //         'classroom_id' => $classroom->id,
+        //         'user_id' => Auth::id(),
+        //         'role' => 'teacher',
+        //         'created_at' => now(),
+        //     ]);
+        // });
+
         // $validated['user_id'] = Auth::id(); // Auth::user()->id , $request
-        $classroom = Classroom::create($validated);
 
         //  $classroom = new Classroom($request->all);
         //  $classroom->save();
@@ -169,27 +184,58 @@ class classroomsController extends Controller
         // $classroom->fill($request->all())
         //     ->save();
 
+        try {
+            $classroom = Classroom::create($validated);
+
+            $classroom->join(Auth::id(), 'teacher');
+
+            // DB::table('classroom_user')->insert([
+            //     'classroom_id' => $classroom->id,
+            //     'user_id' => Auth::id(),
+            //     'role' => 'teacher',
+            //     'created_at' => now(),
+            // ]);
+
+            DB::commit();
+        } catch (QueryException $e) {
+            DB::rollBack();
+            return back()
+                ->with('error', $e->getMessage())
+                ->withInput();
+        }
+
+
+
+
 
         // PRG : Post Redirect Get
         return redirect()->route('classrooms.index');
     }
-    public function show($id)
+    public function show(Classroom $classroom)
     {
         // $classroom = classroom::where('id' , '=' , $id)->first();
         // $classroom = Classroom::withTrashed()->findOrFail($id);
-        $classroom = Classroom::where('user_id' , Auth::id())->findOrFail($id);
+        // $classroom = Classroom::where('user_id' , Auth::id())->findOrFail($id);
+        // $invitation_link  = URL::signedRoute('classrooms.join', [
+        $invitation_link  = URL::temporarySignedRoute('classrooms.join', now()->addHours(3) ,[
+            'classroom' => $classroom->id,
+            'code' => $classroom->code,
+        ]);
 
-        return view('classrooms.show')
+        // $classroom = Classroom::find($id);
+        return View::make('classrooms.show')
             ->with([
                 'classroom' => $classroom,
+                'invitation_link' => $invitation_link,
             ]);
     }
 
     public function edit($id)
     {
+
         $classroom = Classroom::find($id);
         return view('classrooms.edit', [
-            'classroom' => $classroom
+            'classroom' => $classroom,
         ]);
     }
 
@@ -300,7 +346,7 @@ class classroomsController extends Controller
             ->latest('deleted_at')
             ->get();
         //onlyTrashed() ; فقط المحذوف(ألموجود بالسلة)
-        return view('classrooms.trashed', compact('classrooms'));
+        return view('classrooms.trashed', compact('classroom'));
     }
 
     public function restore($id)
@@ -314,7 +360,7 @@ class classroomsController extends Controller
             ->with('success', "Classroom  ({ $classroom->name }) restores");
     }
 
-    public function forceDelete($id)
+    public function forcedelete($id)
     {
         $classroom = Classroom::withTrashed()->findOrFail($id);
         //withTrashed() ; المحذوفة و غير محذوفة
@@ -323,7 +369,7 @@ class classroomsController extends Controller
         //forceDelete(); حذف بشكل نهائي
 
         return redirect()
-            ->route('classrooms.tarshed')
+            ->route('classrooms.trashed')
             ->with('success', "Classroom  ({ $classroom->name }) deleted forever");
     }
 }

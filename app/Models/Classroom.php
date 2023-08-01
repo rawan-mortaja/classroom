@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class Classroom extends Model
@@ -18,7 +19,7 @@ class Classroom extends Model
 
     protected $fillable = [
         'name', 'section', 'subject', 'room', 'theme',
-        'cover_image_path', 'code' , 'user_id' ,
+        'cover_image_path', 'code', 'user_id',
     ]; // تحديد المسموح (white list)
 
 
@@ -73,5 +74,30 @@ class Classroom extends Model
 
         //استدعاء global scope classes
         static::addglobalScope(new UserClassroomScope);
+    }
+
+    public function join($user_id, $role = 'student')
+    {
+        return DB::table('classroom_user')->insert([
+            'classroom_id' => $this->id,
+            'user_id' => $user_id,
+            'role' => $role,
+            'created_at' => now(),
+        ]);
+    }
+
+    //get{ATTRIBUTENAME}Attribute
+    public function getNameAttribute($value)
+    {
+        return strtoupper($value);
+    }
+
+    public function getCoverImagePathAttribute($value)
+    {
+        if($value){
+            return  Storage::disk('public')->url($this->cover_image_path);
+        }
+
+        return 'https://placehold.co/800x300';
     }
 }

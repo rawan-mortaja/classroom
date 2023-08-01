@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TopicRequest;
+use App\Models\Scopes\topicsScope;
 use App\Models\Topic;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
 
@@ -16,7 +18,10 @@ class TopicsController extends Controller
     public function index(Request $request): Renderable
     {
 
-        $topics = Topic::orderBy('Created_at', 'DESC')->get(); // return collection of topic
+        $topics = Topic::orderBy('Created_at', 'DESC')
+            ->where('user_id', '=', Auth::id())
+            ->withoutGlobalScope(topicsScope::class)
+            ->get(); // return collection of topic
 
         $success = session('success');
 
@@ -43,6 +48,8 @@ class TopicsController extends Controller
     public function show($id)
     {
         $topic = Topic::findOrFail($id);
+
+        // $validated['user_id'] = Auth::user()->id;
 
         return view('topics.show')
             ->with([

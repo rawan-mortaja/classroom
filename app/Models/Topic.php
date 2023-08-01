@@ -24,5 +24,5 @@ class Topic extends Model
 
         //استدعاء global scope classes
         static::addglobalScope(new topicsScope);
-    }
+    } 
 }
