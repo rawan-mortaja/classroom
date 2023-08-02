@@ -92,12 +92,22 @@ class Classroom extends Model
         return strtoupper($value);
     }
 
-    public function getCoverImagePathAttribute($value)
-    {
-        if($value){
-            return  Storage::disk('public')->url($this->cover_image_path);
+    // public function getCoverImagePathAttribute($value)
+    // {
+    //     if($this->cover_image_path){
+    //         return  Storage::disk('public')->url($this);
+    //         // asset('storage/' . $va);
+    //     }
+
+    //     return 'https://placehold.co/800x300';
+    // }
+
+    public function getUrlAttribute()
+        {
+            return route('classrooms.show', $this->id);
         }
 
-        return 'https://placehold.co/800x300';
-    }
+        //Creating , Created , Updating , Updated , Saving , Saved
+        // Deleting , deleted , Restroing , Restored , ForceDeleting , ForceDeleted
+
 }

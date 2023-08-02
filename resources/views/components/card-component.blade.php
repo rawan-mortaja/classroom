@@ -4,6 +4,8 @@
 
 <div class="col-3 mb-4">
     <div class="card" style="width: 18rem;">
+        {{-- <img src="{{  $classroom->cover_image_path }}" class="card-img-top"
+        style="height: 100px; object-fit: cover" alt="Classroom Cover Image"> --}}
         @if ($classroom->cover_image_path)
             <img src="{{ asset('storage/' . $classroom->cover_image_path) }}" class="card-img-top"
                 style="height: 100px; object-fit: cover" alt="Classroom Cover Image">
@@ -15,7 +17,7 @@
             <p class="card-text">{{ $classroom->section }}-{{ $classroom->room }}</p>
 
             <div class="text-center d-flex justify-content-between">
-                <a href="{{ route('classrooms.show', $classroom->id) }}" class="btn btn-primary btn-sm mr-2">View</a>
+                <a href="{{ $classroom->url }}" class="btn btn-primary btn-sm mr-2">View</a>
 
                 <a href="{{ route('classrooms.edit', $classroom->id) }}"
                     class="btn btn-success btn-sm text-white mr-2">Update</a>

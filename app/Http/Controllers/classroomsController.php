@@ -48,7 +48,7 @@ class classroomsController extends Controller
         $classrooms = Classroom::active()
             ->recent()
             ->orderBy('Created_at', 'DESC')
-            ->where('user_id', '=', Auth::id())
+            // ->where('user_id', '=', Auth::id())
             // ->withoutGlobalScope(UserClassroomScope::class)
             // ->withoutGlobalScopes()
             ->get();
@@ -216,8 +216,8 @@ class classroomsController extends Controller
         // $classroom = classroom::where('id' , '=' , $id)->first();
         // $classroom = Classroom::withTrashed()->findOrFail($id);
         // $classroom = Classroom::where('user_id' , Auth::id())->findOrFail($id);
-        // $invitation_link  = URL::signedRoute('classrooms.join', [
-        $invitation_link  = URL::temporarySignedRoute('classrooms.join', now()->addHours(3) ,[
+        $invitation_link  = URL::signedRoute('classrooms.join', [
+        // $invitation_link  = URL::temporarySignedRoute('classrooms.join', now()->addHours(3) ,[
             'classroom' => $classroom->id,
             'code' => $classroom->code,
         ]);
