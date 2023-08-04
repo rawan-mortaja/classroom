@@ -19,7 +19,6 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
-use PhpParser\Builder\Class_;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
@@ -159,8 +158,8 @@ class classroomsController extends Controller
         //     'code' => Str::random(6)
         // ]); //تستخدم للحقول الغير موجودة بالجدول
 
-        $validated['code'] = Str::random(6);
-        $validated['user_id'] = Auth::user()->id; // Auth::id(), $request->user()->id()
+        // $validated['code'] = Str::random(6);
+        // $validated['user_id'] = Auth::user()->id; // Auth::id(), $request->user()->id()
 
         DB::beginTransaction();
 
@@ -365,7 +364,7 @@ class classroomsController extends Controller
         $classroom = Classroom::withTrashed()->findOrFail($id);
         //withTrashed() ; المحذوفة و غير محذوفة
         $classroom->forceDelete();
-        Classroom::deleteCoverImage($classroom->cover_image_path);
+        // Classroom::deleteCoverImage($classroom->cover_image_path);
         //forceDelete(); حذف بشكل نهائي
 
         return redirect()

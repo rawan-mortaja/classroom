@@ -1,5 +1,7 @@
 {{-- <div class="form-floating mb-3"> --}}
-<x-from.floating-control name="name" placeholder="Classroom Name">
+
+<x-alert name="error" id="error" class="alert-danger" /> <x-from.floating-control name="name"
+    placeholder="Classroom Name">
     {{-- <x-slot:label>
         <label for="name">Classroom Name</label>
     </x-slot:label> --}}
