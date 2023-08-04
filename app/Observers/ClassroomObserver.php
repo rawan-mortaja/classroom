@@ -30,6 +30,9 @@ class ClassroomObserver
      */
     public function deleted(Classroom $classroom): void
     {
+        if ($classroom->isForceDeleting()) {
+            return;
+        }
         $classroom->status = 'deleted';
         $classroom->save();
     }

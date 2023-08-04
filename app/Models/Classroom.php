@@ -7,6 +7,7 @@ use App\Observers\ClassroomObserver;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -75,7 +76,7 @@ class Classroom extends Model
 
         static::observe(ClassroomObserver::class);
 
-        
+
         // parent::boot(); //لو استخدمت فنكشن boot لازم اعمل استدعاء للبيرنت
         //	static::addGlobalScope('user',function(Builder $query){
         //			$query->where('user_id', '=' , Auth::id());
@@ -106,6 +107,16 @@ class Classroom extends Model
         //     $classroom->status = 'active';
         //     $classroom->save();
         // });
+    }
+
+    public function classworks(): HasMany
+    {
+        return $this->hasMany(classwork::class ,'classroom_id' , 'id');
+    }
+
+    public function topics(): HasMany
+    {
+        return $this->hasMany(Topic::class ,'classroom_id' , 'id');
     }
 
     public function join($user_id, $role = 'student')

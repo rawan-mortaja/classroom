@@ -20,7 +20,6 @@ return new class extends Migration
                 ->nullable()
                 ->constrained()
                 ->nullOnDeleteOnDelete();
-
             $table->foreignId('topic_id')
                 ->nullable()
                 ->constrained()
@@ -43,3 +42,4 @@ return new class extends Migration
         Schema::dropIfExists('classworks');
     }
 };
+

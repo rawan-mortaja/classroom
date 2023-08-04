@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\classroomsController;
+use App\Http\Controllers\ClassworksController;
 use App\Http\Controllers\JoinClassroomController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProfileController;
@@ -109,7 +110,14 @@ Route::middleware(['auth'])->group(function () {
     Route::resources([
         'topics' => TopicsController::class,
         'classrooms' => classroomsController::class,
+        'classrooms.classworks' => ClassworksController::class,
     ]);
+
+
+    // Route::resource('classrooms.classworks' , ClassworksController::class)
+    // ->shallow();
+
+    // Route::get('classrooms/{classroom}/Classworks');
 });
 
 // Route::get('/topics/trashed', [TopicsController::class, 'trashed'])

@@ -206,7 +206,6 @@ class classroomsController extends Controller
 
 
 
-
         // PRG : Post Redirect Get
         return redirect()->route('classrooms.index');
     }
