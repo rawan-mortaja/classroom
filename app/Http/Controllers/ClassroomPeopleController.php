@@ -7,7 +7,8 @@ use Illuminate\Http\Request;
 
 class ClassroomPeopleController extends Controller
 {
-    public function __invoke(Classroom $classroom){
-        return view('classroomspeople' , compact(['classroom']));
-}
+    public function __invoke(Classroom $classroom) // magic method تسمح انه استدعي الاوبجكت ك فنكشن
+    {
+        return view('classrooms.people', compact(['classroom']));
+    }
 }

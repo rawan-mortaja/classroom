@@ -21,7 +21,8 @@
                         <option value="{{ $topic->id }}">{{ $topic->name }}</option>
                     @endforeach
                 </select>
-                <x-form.errors name="topic_id" />
+                <x-errors name="topic_id" />
+                <hr>
                 <button type="submit" class="btn btn-primary">Create</button>
             </x-from.floating-control>
         </form>

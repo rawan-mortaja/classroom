@@ -111,12 +111,34 @@ class Classroom extends Model
 
     public function classworks(): HasMany
     {
-        return $this->hasMany(classwork::class ,'classroom_id' , 'id');
+        return $this->hasMany(classwork::class, 'classroom_id', 'id');
     }
 
     public function topics(): HasMany
     {
-        return $this->hasMany(Topic::class ,'classroom_id' , 'id');
+        return $this->hasMany(Topic::class, 'classroom_id', 'id');
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(
+            User::class, // Related model
+            'classroom_user', // pivot table
+            'classroom_id', // FK for current model in the pivot table
+            'user_id', // FK for related model in the pivot table
+            'id', // PK for current model
+            'id', // PK for related model
+        )->withPivot(['role', 'created_at']);
+                //->wherePivot('role' , '=' , 'teacher');
+    }
+
+    public function teachers()
+    {
+        return $this->users()->wherePivot('role', '=', 'teacher');
+    }
+    public function students()
+    {
+        return $this->users()->wherePivot('role', '=', 'student');
     }
 
     public function join($user_id, $role = 'student')

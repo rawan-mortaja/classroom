@@ -72,26 +72,26 @@ class ClassworksController extends Controller
     public function store(Request $request, Classroom $classroom)
     {
 
+        // dd($request->all());
         $type = $this->getType($request);
+        $request->validate([
+            'title' => ['required', 'string', 'max:255'],
+            'description' => ['nullable', 'string'],
+            'topic_id' => ['nullable', 'int', 'exists:topics,id'],
 
-       $ $request->validate([
-            'title' => 'required' | 'string' | 'max:255',
-            'description' => 'nullable' | 'string',
-            'topic_id' => 'nullable' | 'int' | 'exists.topics,id',
+
         ]);
-
         $request->merge([
-            'uers_id' => Auth::id(),
-            'classroom_id' => $classroom->id,
+            'user_id' => Auth::id(),
             'type' => $type,
         ]);
+        // dd($request->all());
 
-        $classwork =  $classroom->classworks()->create($request->all());
-        //$classwork =  classwork::created($request->all());
-
-        return redirect()
-            ->route('classrooms.classworks.index', $classroom->id)
-            ->with('success', 'Classwork created!');
+        $classwork = $classroom->classworks()
+            ->create($request->all());
+        return redirect()->route('classrooms.classworks.index', $classroom->id)
+            ->with('msg', 'classwork craeted successfully')
+            ->with('type', 'success');
     }
 
     /**

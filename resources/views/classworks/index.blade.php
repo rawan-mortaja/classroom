@@ -6,29 +6,11 @@
     <div class="container">
         <h1>{{ $classroom->name }} (#{{ $classroom->id }})</h1>
         <h3>Classwork
-            {{-- <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
-                    data-bs-toggle="dropdown" aria-expanded="false">
-                    + create
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    <li><a class="dropdown-item"
-                            href="{{ route('classrooms.classworks.create', ['classroom' => $classroom->id, 'type' => 'assignment']) }}">Assignment</a>
-                    </li>
-                    <li><a class="dropdown-item"
-                            href="{{ route('classrooms.classworks.create', ['classroom' => $classroom->id, 'type' => 'question']) }}">Question</a>
-                    </li>
-                    <li><a class="dropdown-item"
-                            href="{{ route('classrooms.classworks.create', ['classroom' => $classroom->id, 'type' => 'material']) }}">Material</a>
-                    </li>
-                </ul>
-            </div> --}}
-            <div class="dropdown" aria-label="Default select example">
-                {{-- <option selected>Open this select menu</option> --}}
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
+            <div class="dropdown">
+                <a class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                    aria-expanded="false">
                     + Create
-                </button>
+                </a>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                     <li><a class="dropdown-item"
                             href="{{ route('classrooms.classworks.create', ['classroom' => $classroom->id, 'type' => 'assignment']) }}">Assignment</a>
@@ -64,9 +46,10 @@
                         </div>
                     </div>
             </div>
-    </div>
-    @endforeach
-@empty
-    <p class="text-center fs-4"> No Classrooms Found.</p>
-    @endforelse
-@endsection
+        @endforeach
+    @empty
+        <p class="text-center fs-4"> No Classrooms Found.</p>
+        @endforelse
+    @endsection
+
+</div>

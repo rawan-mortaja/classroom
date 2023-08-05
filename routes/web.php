@@ -1,12 +1,11 @@
 <?php
 
+use App\Http\Controllers\ClassroomPeopleController;
 use App\Http\Controllers\classroomsController;
 use App\Http\Controllers\ClassworksController;
 use App\Http\Controllers\JoinClassroomController;
-use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TopicsController;
-use App\Models\Classroom;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -112,6 +111,9 @@ Route::middleware(['auth'])->group(function () {
         'classrooms' => classroomsController::class,
         'classrooms.classworks' => ClassworksController::class,
     ]);
+
+    Route::get('/classrooms/{classroom}/people', ClassroomPeopleController::class)
+        ->name('classrooms.people');
 
 
     // Route::resource('classrooms.classworks' , ClassworksController::class)
