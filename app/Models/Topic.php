@@ -35,8 +35,8 @@ class Topic extends Model
         return $this->hasMany(classwork::class, 'topic_id', 'id');
     }
 
-    public function classrooms(): BelongsTo
-    {
-        return $this->BelongsTo(Classroom::class, 'classroom_id', 'id');
-    }
+    // public function classrooms(): BelongsTo
+    // {
+    //     return $this->BelongsTo(Classroom::class, 'classroom_id', 'id');
+    // }
 }

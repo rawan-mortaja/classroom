@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Classroom;
 use App\Models\classwork;
+use App\Models\Topic;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -61,8 +62,8 @@ class ClassworksController extends Controller
     {
 
         $type = $this->getType($request);
-
-        return view('classworks.create', compact('classroom', 'type'));
+        $topics  = Topic::all();
+        return view('classworks.create', compact('classroom', 'type', 'topics'));
     }
 
     /**

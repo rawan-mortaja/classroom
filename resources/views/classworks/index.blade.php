@@ -6,7 +6,7 @@
     <div class="container">
         <h1>{{ $classroom->name }} (#{{ $classroom->id }})</h1>
         <h3>Classwork
-            <div class="dropdown">
+            {{-- <div class="dropdown">
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
                     data-bs-toggle="dropdown" aria-expanded="false">
                     + create
@@ -22,8 +22,24 @@
                             href="{{ route('classrooms.classworks.create', ['classroom' => $classroom->id, 'type' => 'material']) }}">Material</a>
                     </li>
                 </ul>
-
-
+            </div> --}}
+            <div class="dropdown" aria-label="Default select example">
+                {{-- <option selected>Open this select menu</option> --}}
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    + Create
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li><a class="dropdown-item"
+                            href="{{ route('classrooms.classworks.create', ['classroom' => $classroom->id, 'type' => 'assignment']) }}">Assignment</a>
+                    </li>
+                    <li><a class="dropdown-item"
+                            href="{{ route('classrooms.classworks.create', ['classroom' => $classroom->id, 'type' => 'question']) }}">Question</a>
+                    </li>
+                    <li><a class="dropdown-item"
+                            href="{{ route('classrooms.classworks.create', ['classroom' => $classroom->id, 'type' => 'material']) }}">Material</a>
+                    </li>
+                </ul>
             </div>
         </h3>
         <hr>

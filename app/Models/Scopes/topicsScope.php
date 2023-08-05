@@ -14,8 +14,8 @@ class topicsScope implements Scope
      */
     public function apply(Builder $builder, Model $model): void
     {
-        if ($id = Auth::id()) {
-            $builder->where('user_id', '=', 2);
-        }
+        // if ($id = Auth::id()) {
+        //     $builder->where('user_id', '=', 1);
+        // }
     }
 }
