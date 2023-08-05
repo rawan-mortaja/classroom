@@ -73,10 +73,10 @@ class ClassworksController extends Controller
 
         $type = $this->getType($request);
 
-        $request->validate([
-            'title' => ['required', 'string', 'max:255'],
-            'description' => ['nullable', 'string'],
-            'topic_id' => ['nullable' . 'int', 'exists.topics,id'],
+       $ $request->validate([
+            'title' => 'required' | 'string' | 'max:255',
+            'description' => 'nullable' | 'string',
+            'topic_id' => 'nullable' | 'int' | 'exists.topics,id',
         ]);
 
         $request->merge([
