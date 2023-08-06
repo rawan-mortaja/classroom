@@ -36,7 +36,7 @@ class classwork extends Model
     public function users()
     {
         return $this->belongsToMany(User::class)
-            ->withPivot(['grade', 'submitted_at', 'status', 'created_at' , 'updated_at'])
+            ->withPivot(['grade', 'submitted_at', 'status', 'created_at' ])
             ->using(ClassworkUser::class);
     }
 

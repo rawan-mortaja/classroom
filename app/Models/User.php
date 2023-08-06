@@ -77,9 +77,8 @@ class User extends Authenticatable implements MustVerifyEmail
         )->withPivot(['role', 'created_at']);
     }
 
-    // public function classworks()
-    // {
-    //   return $this->belongsTo(classwork::class)
-    //   ->using(ClassworkUser::class);
-    // }
+    public function classworks()
+    {
+      return $this->hasMany(classwork::class);
+    }
 }

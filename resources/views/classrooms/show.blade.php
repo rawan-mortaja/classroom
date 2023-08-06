@@ -39,9 +39,7 @@
             <div class="col-md-9">
 
                 <p>Invitation Link : <a href="{{ $invitation_link }}">{{ $invitation_link }}</a></p>
-                <p> <a href="{{ route('classrooms.classworks.index', $classroom->id) }}" class="btn btn-outline-dark">
-                        Classworks
-                    </a></p>
+
             </div>
         </div>
     </div>

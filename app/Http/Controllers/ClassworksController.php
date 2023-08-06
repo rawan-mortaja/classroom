@@ -63,7 +63,7 @@ class ClassworksController extends Controller
 
         $type = $this->getType($request);
         $classworks  = classwork::all();
-        return view('classworks.create', compact('classroom', 'type', 'classworks'));
+        return view('classworks.create', compact('classroom', 'type', 'classwork'));
     }
 
     /**
@@ -91,13 +91,13 @@ class ClassworksController extends Controller
         // dd($request->all());
 
         $classwork = $classroom->classworks()
-            ->create($request->all());
+            ->create($validate);
 
         $classwork->users()->attach($request->input('students'));
 
         return redirect()
             ->route('classrooms.classworks.index', $classroom->id)
-            ->with('msg', 'classwork craeted successfully');
+            ->with('succes', 'classwork craeted successfully');
     }
 
     /**
@@ -123,7 +123,7 @@ class ClassworksController extends Controller
             ->pluck('id')
             ->toArray(); // تحول العنصر لاوبجكت
 
-        return view('classworks.edit', compact('classroom', 'type'));
+        return view('classworks.edit', compact('classroom','type' , 'classwork'));
     }
 
     /**
@@ -140,7 +140,7 @@ class ClassworksController extends Controller
         ]);
 
         // Mass assignment
-        $classwork->update($validated);
+        $classwork->update($request->all());
         $classwork->users()->sync($request->input('students')); //بتخلي الاري و الجدول متطابقين
 
         return back()
