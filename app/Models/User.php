@@ -60,8 +60,25 @@ class User extends Authenticatable implements MustVerifyEmail
         //     }
         // );
         return Attribute::make(
-            get : fn ($value) => strtoupper($value),
-            set: fn ($value) =>strtolower($value),
+            get: fn ($value) => strtoupper($value),
+            set: fn ($value) => strtolower($value),
         );
+    }
+
+    public function classrooms()
+    {
+        return $this->belongsToMany(
+            Classroom::class, // Related model
+            'classroom_user', // pivot table
+            'user_id', // FK for current model in the pivot table
+            'classroom_id', // FK for related model in the pivot table
+            'id', // PK for current model
+            'id', // PK for related model
+        )->withPivot(['role', 'created_at']);
+    }
+
+    public function classworks()
+    {
+        
     }
 }
