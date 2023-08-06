@@ -58,38 +58,45 @@ class ClassworksController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(Request $request, Classroom $classroom)
+    public function create(Request $request, Classroom $classroom , classwork $classwork)
     {
 
         $type = $this->getType($request);
-        $topics  = Topic::all();
-        return view('classworks.create', compact('classroom', 'type', 'topics'));
+        $classworks  = classwork::all();
+        return view('classworks.create', compact('classroom', 'type', 'classworks'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, Classroom $classroom)
+    public function store(Request $request, Classroom $classroom , classwork $cl)
     {
 
         // dd($request->all());
         $type = $this->getType($request);
-        $request->validate([
+        
+        $validate=  $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
             'topic_id' => ['nullable', 'int', 'exists:topics,id'],
 
 
         ]);
+
         $request->merge([
             'user_id' => Auth::id(),
             'type' => $type,
         ]);
+
         // dd($request->all());
 
         $classwork = $classroom->classworks()
             ->create($request->all());
-        return redirect()->route('classrooms.classworks.index', $classroom->id)
+
+        $classwork->users()->attach($request->input('students'));
+
+        return redirect()
+            ->route('classrooms.classworks.index', $classroom->id)
             ->with('msg', 'classwork craeted successfully')
             ->with('type', 'success');
     }
@@ -109,13 +116,15 @@ class ClassworksController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id, Classroom $classroom, classwork $classwork)
+    public function edit(Request $request, Classroom $classroom, classwork $classwork)
     {
-        $topic = classwork::findOrFail($id);
-        return view('classworks.edit', [
-            'classwork' => $classwork,
-            'classroom' => $classroom,
-        ]);
+        $type = $this->getType($request);
+
+        $assigned = $classwork->users()
+            ->pluck('id')
+            ->toArray(); // تحول العنصر لاوبجكت
+
+        return view('classworks.edit', compact('classroom', 'type'));
     }
 
     /**
@@ -123,13 +132,20 @@ class ClassworksController extends Controller
      */
     public function update(Request $request, Classroom $classroom, classwork $classwork)
     {
-        $validated =  $request->validated();
+        $validated = $request->validate([
+            'title' => ['required', 'string', 'max:255'],
+            'description' => ['nullable', 'string'],
+            'topic_id' => ['nullable', 'int', 'exists:topics,id'],
+
+
+        ]);
 
         // Mass assignment
         $classwork->update($validated);
+        $classwork->users()->sync($request->input('students')); //بتخلي الاري و الجدول متطابقين
 
-        return Redirect::route('classrooms.classworks.index')
-            ->with('success', 'Classwork updated');
+        return back()
+            ->with('success', 'Classwork updated!');
     }
 
     /**

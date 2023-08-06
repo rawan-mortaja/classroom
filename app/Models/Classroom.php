@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Scopes\UserClassroomScope;
 use App\Observers\ClassroomObserver;
+use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -148,13 +149,18 @@ class Classroom extends Model
 
     public function join($user_id, $role = 'student')
     {
+        $exists =  $this->users()->where('id', '=', $user_id)->exists();
+
+        if ($exists) {
+            throw new Exception('User already joined the classroom');
+        }
         // use relationship many to many
         return $this->users()->attach($user_id, [
             'role' => $role,
             'created_at' => now(),
         ]); // INSERT
 
-        
+
         // return DB::table('classroom_user')->insert([
         //     'classroom_id' => $this->id,
         //     'user_id' => $user_id,

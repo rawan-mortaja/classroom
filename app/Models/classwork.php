@@ -39,4 +39,10 @@ class classwork extends Model
             ->withPivot(['grade', 'submitted_at', 'status', 'created_at'])
             ->using(ClassworkUser::class);
     }
+
+    public function setUpdatedAt($value)
+    {
+        return $this;
+    }
+
 }

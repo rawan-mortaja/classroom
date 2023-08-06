@@ -112,9 +112,11 @@ Route::middleware(['auth'])->group(function () {
         'classrooms.classworks' => ClassworksController::class,
     ]);
 
-    Route::get('/classrooms/{classroom}/people', ClassroomPeopleController::class)
+    Route::get('/classrooms/{classroom}/people', [ClassroomPeopleController::class, 'index'])
         ->name('classrooms.people');
 
+    Route::delete('/classrooms/{classroom}/people', [ClassroomPeopleController::class, 'destroy'])
+        ->name('classrooms.people.destroy');
 
     // Route::resource('classrooms.classworks' , ClassworksController::class)
     // ->shallow();

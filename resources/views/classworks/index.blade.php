@@ -2,13 +2,30 @@
 
 @section('title', 'Classworks')
 @section('content')
+    <div class="bottom-100"></div>
+    <ul class="nav justify-content-center nav-tabs ">
+        <li class="nav-item">
+            <a class="nav-link " aria-current="page" href="{{ route('classrooms.show', $classroom->id) }}">Stream</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="{{ route('classrooms.classworks.index', $classroom->id) }}">Classworks</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('classrooms.people', $classroom->id) }}">Peoples</a>
+        </li>
+        {{-- <li class="nav-item">
+      <a class="nav-link disabled" aria-disabled="true">Grades</a>
+    </li> --}}
+    </ul>
+    <br> <br>
 
     <div class="container">
+
         <h1>{{ $classroom->name }} (#{{ $classroom->id }})</h1>
         <h3>Classwork
             <div class="dropdown">
-                <a class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
-                    aria-expanded="false">
+                <a class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
+                    data-bs-toggle="dropdown" aria-expanded="false">
                     + Create
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
@@ -40,15 +57,13 @@
                         </h2>
                         <div id="flush-collapse{{ $classwork->id }}" class="accordion-collapse collapse"
                             data-bs-parent="#accordionFlushExample">
-                            <div class="accordion-body">
-                                {{ $classwork->description }}
+                            <div class="accordion-body"> {{ $classwork->description }}
                             </div>
                         </div>
-                    </div>
+                @endforeach
             </div>
-        @endforeach
-    @empty
-        <p class="text-center fs-4"> No Classrooms Found.</p>
+        @empty
+            <p class="text-center fs-4"> No Classrooms Found.</p>
         @endforelse
     @endsection
 

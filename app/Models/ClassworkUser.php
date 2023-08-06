@@ -10,4 +10,9 @@ class ClassworkUser extends Pivot
 {
     use HasFactory;
 
+    public function setUpdatedAt($value)
+    {
+        return $this;
+    }
+
 }
