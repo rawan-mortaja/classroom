@@ -22,6 +22,7 @@ return new class extends Migration
                 ->default('assigned');
             $table->timestamp('created_at')->nullable();
             $table->primary(['classwork_id', 'user_id']);
+
         });
     }
 

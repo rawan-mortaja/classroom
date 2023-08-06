@@ -14,15 +14,12 @@
             @method('put')
             <div class="row">
                 <div class="col-md-8">
-
                     <x-from.floating-control name="title" :value="$classwork->title" placeholder="Title">
                         <x-from.input name="title" class="form-control-lg" placeholder="Description" />
                     </x-from.floating-control>
                     <x-from.floating-control name="description" :value="$classwork->description" placeholder="Description (Optional)">
                         <x-from.textarea name="description" class="form-control-lg" placeholder="Description (Optional)" />
                     </x-from.floating-control>
-
-
                 </div>
                 <div class="col-md-4">
                     <div>

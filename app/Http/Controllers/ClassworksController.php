@@ -74,7 +74,7 @@ class ClassworksController extends Controller
 
         // dd($request->all());
         $type = $this->getType($request);
-        
+
         $validate=  $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
@@ -97,8 +97,7 @@ class ClassworksController extends Controller
 
         return redirect()
             ->route('classrooms.classworks.index', $classroom->id)
-            ->with('msg', 'classwork craeted successfully')
-            ->with('type', 'success');
+            ->with('msg', 'classwork craeted successfully');
     }
 
     /**

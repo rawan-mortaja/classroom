@@ -19,7 +19,7 @@ class classwork extends Model
 
     protected $fillable = [
         'classroom_id', 'user_id', 'topic_id', 'title',
-        'description', 'type', 'status', 'published_at', 'options',
+        'description', 'type', 'status', 'published_at', 'options', 'created_at' , 'updated_at'
     ];
 
     public function classroom(): BelongsTo
@@ -36,11 +36,15 @@ class classwork extends Model
     public function users()
     {
         return $this->belongsToMany(User::class)
-            ->withPivot(['grade', 'submitted_at', 'status', 'created_at'])
+            ->withPivot(['grade', 'submitted_at', 'status', 'created_at' , 'updated_at'])
             ->using(ClassworkUser::class);
     }
 
     public function setUpdatedAt($value)
+    {
+        return $this;
+    }
+    public function setCreatedAt($value)
     {
         return $this;
     }
