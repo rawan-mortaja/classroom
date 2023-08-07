@@ -3,7 +3,9 @@
 use App\Http\Controllers\ClassroomPeopleController;
 use App\Http\Controllers\classroomsController;
 use App\Http\Controllers\ClassworksController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\JoinClassroomController;
+use App\Http\Controllers\LinkCopyContorller;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TopicsController;
 use Illuminate\Support\Facades\Route;
@@ -117,6 +119,12 @@ Route::middleware(['auth'])->group(function () {
 
     Route::delete('/classrooms/{classroom}/people', [ClassroomPeopleController::class, 'destroy'])
         ->name('classrooms.people.destroy');
+
+
+
+    Route::post('comments', [CommentController::class, 'store'])
+        ->name('comments.store');
+
 
     // Route::resource('classrooms.classworks' , ClassworksController::class)
     // ->shallow();

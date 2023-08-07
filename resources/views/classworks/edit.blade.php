@@ -6,27 +6,27 @@
         <h1>{{ $classroom->name }} (#{{ $classroom->id }})</h1>
         <h3>Update Classwork</h3>
         <x-alert name="success" class="alert-success" />
-
+        <x-alert name="error" class="alert-danger" />
         <hr>
-        <form action="{{ route('classrooms.classworks.update', [$classroom->id, $classwork->id, 'type' => $type]) }}"
+        <form action="{{ route('classrooms.classworks.update', [$classroom->id, $classwork->id]) }}"
             method="POST">
             @csrf
             @method('put')
             <div class="row">
                 <div class="col-md-8">
-                    <x-from.floating-control name="title" :value="$classwork->title" placeholder="Title">
-                        <x-from.input name="title" class="form-control-lg" placeholder="Title" />
+                    <x-from.floating-control name="title" placeholder="Title">
+                        <x-from.input name="title" class="form-control-lg"  :value="$classwork->title" placeholder="Title" />
                     </x-from.floating-control>
-                    <x-from.floating-control name="description" :value="$classwork->description" placeholder="Description (Optional)">
-                        <x-from.textarea name="description" class="form-control-lg" placeholder="Description (Optional)" />
+                    <x-from.floating-control name="description"  placeholder="Description (Optional)">
+                        <x-from.textarea name="description" class="form-control-lg" :value="$classwork->description" placeholder="Description (Optional)" />
                     </x-from.floating-control>
                 </div>
                 <div class="col-md-4">
                     <div>
                         @foreach ($classroom->students as $student)
                             <div class="form-check">
-                                <input class="form-check-input" name="students[]" type="checkbox"
-                                    value="{{ $student->id }}" id="std-{{ $student->id }}" @checked(in_array($student->id, $assigned))>
+                                <input class="form-check-input" type="checkbox" name="students[]"
+                                    value="{{ $student->id }}" id="std-{{ $student->id }}" @checked(in_array($student->id ,$assigned) )>
                                 <label class="form-check-label" for="std-{{ $student->id }}">
                                     {{ $student->name }}
                                 </label>
@@ -41,12 +41,12 @@
                                 </option>
                             @endforeach
                         </select>
-                        <x-errors name="topic_id" />
+                        {{-- <x-errors name="topic_id" /> --}}
                     </x-from.floating-control>
                 </div>
             </div>
-            {{-- <hr> --}}
-            <button type="submit" class="btn btn-primary">Create</button>
+            <hr>
+            <button type="submit" class="btn btn-primary">Update</button>
 
         </form>
     </div>

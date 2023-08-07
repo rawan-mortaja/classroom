@@ -2,22 +2,50 @@
 
 @section('title', 'Classworks')
 @section('content')
-    <div class="bottom-100"></div>
-    <ul class="nav justify-content-center nav-tabs ">
-        <li class="nav-item">
-            <a class="nav-link " aria-current="page" href="{{ route('classrooms.show', $classroom->id) }}">Stream</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link active" href="{{ route('classrooms.classworks.index', $classroom->id) }}">Classworks</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{{ route('classrooms.people', $classroom->id) }}">Peoples</a>
-        </li>
-        {{-- <li class="nav-item">
+    <div class="bottom-100">
+        <ul class="nav justify-content-center nav-tabs ">
+            <li class="nav-item">
+                <a class="nav-link " aria-current="page" href="{{ route('classrooms.show', $classroom->id) }}">Stream</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="{{ route('classrooms.classworks.index', $classroom->id) }}">Classworks</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('classrooms.people', $classroom->id) }}">Peoples</a>
+            </li>
+            {{-- <li class="nav-item">
       <a class="nav-link disabled" aria-disabled="true">Grades</a>
-    </li> --}}
+    </li>
     </ul>
     <br> <br>
+    </div>
+    {{-- <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">Google Classroom</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('classrooms.show', $classroom->id) }}">Stream</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('classrooms.classworks.index', $classroom->id) }}">Classwork</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('classrooms.people', $classroom->id) }}">People</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Grades</a>
+                    </li>
+                    <!-- Add more menu items as needed -->
+                </ul>
+                <!-- Add user profile and settings dropdown here -->
+            </div>
+        </div>
+    </nav> --}}
 
     <div class="container">
 
@@ -56,10 +84,10 @@
             </ul>
         </div> --}}
 
-        <hr>
+            <hr>
 
             @forelse ($classworks as $group)
-            <br>
+                <br>
                 <h3>{{ $group->first()->topic->name }}</h3>
                 <div class="accordion accordion-flush" id="accordionFlushExample">
                     @foreach ($group as $classwork)

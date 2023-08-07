@@ -39,7 +39,7 @@
                                 <option value="{{ $topic->id }}">{{ $topic->name }}</option>
                             @endforeach
                         </select>
-                        <x-errors name="topic_id" />
+                        {{-- <x-errors name="topic_id" /> --}}
                     </x-from.floating-control>
                 </div>
             </div>

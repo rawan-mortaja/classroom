@@ -10,12 +10,15 @@ class ClassworkUser extends Pivot
 {
     use HasFactory;
 
+    
     public function setUpdatedAt($value)
     {
+        // $this->{$this->getUpdatedAtColumn()} = $value;
         return $this;
     }
     public function setCreatedAt($value)
     {
+        // $this->{$this->getCratedAtColumn()} = $value;
         return $this;
     }
 

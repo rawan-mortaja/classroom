@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Classroom;
 use App\Models\classwork;
-use App\Models\Topic;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
 
 class ClassworksController extends Controller
@@ -58,7 +60,7 @@ class ClassworksController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(Request $request, Classroom $classroom , classwork $classwork)
+    public function create(Request $request, Classroom $classroom, classwork $classwork)
     {
 
         $type = $this->getType($request);
@@ -69,13 +71,13 @@ class ClassworksController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, Classroom $classroom , classwork $cl)
+    public function store(Request $request, Classroom $classroom, classwork $classwork)
     {
 
         // dd($request->all());
         $type = $this->getType($request);
 
-        $validate=  $request->validate([
+        $validate =  $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
             'topic_id' => ['nullable', 'int', 'exists:topics,id'],
@@ -88,12 +90,21 @@ class ClassworksController extends Controller
             'type' => $type,
         ]);
 
-        // dd($request->all());
+        // DB::transaction(function () use ($classroom, $validate, $request) {
+
+        //     $classwork = $classroom->classworks()
+        //         ->create($validate);
+
+        //     $classwork->users()->attach($request->input('students'));
+        // });
 
         $classwork = $classroom->classworks()
             ->create($validate);
 
         $classwork->users()->attach($request->input('students'));
+
+        // dd($request->all());
+
 
         return redirect()
             ->route('classrooms.classworks.index', $classroom->id)
@@ -105,11 +116,17 @@ class ClassworksController extends Controller
      */
     public function show(Classroom $classroom, classwork $classwork)
     {
-        return View::make('classworks.show')
-            ->with([
-                'classroom' => $classroom,
-                'classwork' => $classwork,
-            ]);
+        // $invitation_link  = URL::signedRoute('classworks.link', [
+        //     // $invitation_link  = URL::temporarySignedRoute('classrooms.join', now()->addHours(3) ,[
+        //     'classroom' => $classroom->id,
+        //     'classwork' => $classwork->id,
+        // ]);
+        $classwork->load('comments.user');
+
+        return View::make('classworks.show', compact('classroom', 'classwork'));
+        // ->with([
+        //     'invitation_link' => $invitation_link,
+        // ]);
     }
 
     /**
@@ -117,13 +134,15 @@ class ClassworksController extends Controller
      */
     public function edit(Request $request, Classroom $classroom, classwork $classwork)
     {
+        $classwork = $classroom->classworks()
+            ->findOrFail($classwork->id);
         $type = $this->getType($request);
 
         $assigned = $classwork->users()
             ->pluck('id')
             ->toArray(); // تحول العنصر لاوبجكت
 
-        return view('classworks.edit', compact('classroom','type' , 'classwork'));
+        return view('classworks.edit', compact('classroom', 'classwork', 'type', 'assigned'));
     }
 
     /**
@@ -135,16 +154,11 @@ class ClassworksController extends Controller
             'title' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
             'topic_id' => ['nullable', 'int', 'exists:topics,id'],
-
-
         ]);
 
-        // Mass assignment
         $classwork->update($request->all());
-        $classwork->users()->sync($request->input('students')); //بتخلي الاري و الجدول متطابقين
-
-        return back()
-            ->with('success', 'Classwork updated!');
+        return View::make('classworks.show', compact('classroom', 'classwork'))
+            ->with('success', 'Classwork Updated');
     }
 
     /**
@@ -154,7 +168,37 @@ class ClassworksController extends Controller
     {
         $classwork->delete();
 
-        return redirect(route('classrooms.classworks.index'))
+        return redirect()->route('classrooms.classworks.index', $classroom->id)
             ->with('success', 'Classwork deleted');
     }
+
+    // public function copyLink(Request $request, Classroom $classroom, classwork $classwork ,$link)
+    // {
+
+    //     // // $classwork = classwork::with([
+    //     // //     'classwork' => $classwork->id,
+    //     // // ]);
+
+    //     // // Your copy link logic here
+
+    //     // return response()->json(['message' => 'Link copied successfully']);
+    //     $link = route('classwork.link'); // Replace with your link generation logic
+    //     return view('classworks.show', compact('link', 'classroom', 'classwork'));
+    // }
+
+    // public function showUserProfile($userId, Classroom $classroom, classwork $classwork)
+    // {
+    //     $user = User::find($userId);
+
+    //     $avatarUrl = Http::get('https://ui-avatars.com/api/?name=', [
+    //         'name' => $user->name,
+    //         'background' => '5EBEF5',
+    //         'color' => 'fff',
+    //         'rounded' => true,
+    //         'size' => 64,
+    //     ])->body();
+
+    //     return View::make('classworks.show', compact('classroom', 'classwork', 'user', 'avatarUrl'));
+    //     // return view('user.profile', compact());
+    // }
 }

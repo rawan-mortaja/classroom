@@ -4,7 +4,8 @@
 @section('content')
     <div class="container">
         <h1>Create Classroom</h1>
-
+        <x-alert name="success" class="alert-success" />
+        <x-alert name="error" class="alert-danger" />
         @if ($errors->any())
             <div class="alert alert-danger">
                 <ul>
