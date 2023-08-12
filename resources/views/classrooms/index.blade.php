@@ -1,12 +1,13 @@
-{{-- @extends('layout.master')
+@extends('layout.master')
 
 @section('title', 'Classrooms')
 
-@section('content') --}}
+@section('content')
 
-<x-main-layout title="Classrooms">
+    {{-- <x-main-layout title="Classrooms"> --}}
     <div class="container">
         <h1> Classrooms</h1>
+        @if (session()->has('success'))
             <div class="alert alert-success" role="alert">
                 {{ session('success') }}
             </div>
@@ -28,9 +29,10 @@
             @endforeach
         </div>
     </div>
-    {{-- @endsection --}}
+    {{-- @endif --}}
+@endsection
 
-</x-main-layout>
+{{-- </x-main-layout> --}}
 
 @pushIf(false , 'scripts')
 <script>
