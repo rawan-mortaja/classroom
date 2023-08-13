@@ -174,7 +174,7 @@ class classroomsController extends Controller
         //     ]);
         // });
 
-        // $validated['user_id'] = Auth::id(); // Auth::user()->id , $request
+        // $validnated['user_id'] = Auth::id(); // Auth::user()->id , $request
 
         //  $classroom = new Classroom($request->all);
         //  $classroom->save();

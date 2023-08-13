@@ -12,39 +12,7 @@
             method="POST">
             @csrf
             @method('put')
-            <div class="row">
-                <div class="col-md-8">
-                    <x-from.floating-control name="title" placeholder="Title">
-                        <x-from.input name="title" class="form-control-lg"  :value="$classwork->title" placeholder="Title" />
-                    </x-from.floating-control>
-                    <x-from.floating-control name="description"  placeholder="Description (Optional)">
-                        <x-from.textarea name="description" class="form-control-lg" :value="$classwork->description" placeholder="Description (Optional)" />
-                    </x-from.floating-control>
-                </div>
-                <div class="col-md-4">
-                    <div>
-                        @foreach ($classroom->students as $student)
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="students[]"
-                                    value="{{ $student->id }}" id="std-{{ $student->id }}" @checked(in_array($student->id ,$assigned) )>
-                                <label class="form-check-label" for="std-{{ $student->id }}">
-                                    {{ $student->name }}
-                                </label>
-                            </div>
-                        @endforeach
-                    </div>
-                    <x-from.floating-control name="topic_id" placeholder="Topic ID (Optional)">
-                        <select class="form-select" name="topic_id" id="topic_id">
-                            <option value="">No Topic</option>
-                            @foreach ($classroom->topics as $topic)
-                                <option @selected($topic->id == $classwork->topic_id) value="{{ $topic->id }}">{{ $topic->name }}
-                                </option>
-                            @endforeach
-                        </select>
-                        {{-- <x-errors name="topic_id" /> --}}
-                    </x-from.floating-control>
-                </div>
-            </div>
+            @include('classworks._form')
             <hr>
             <button type="submit" class="btn btn-primary">Update</button>
 
