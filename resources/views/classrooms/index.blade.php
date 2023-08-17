@@ -15,12 +15,12 @@
             <x-alert name="error" id="error" class="alert-danger" />
         @endif
         <div class="row">
-            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            {{-- <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                 <a class="btn btn-primary btn-group-lg " type="button" href="{{ route('classrooms.create') }}">Create
                     Classroom</a>
                 <a class="btn btn-danger btn-group-lg " type="button" href="{{ route('classrooms.trashed') }}">Trashed
                     Classroom</a>
-            </div>
+            </div> --}}
             <div>
                 <br>
             </div>

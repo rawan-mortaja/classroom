@@ -33,7 +33,7 @@ class ClassroomObserver
         if ($classroom->isForceDeleting()) {
             return;
         }
-        $classroom->status = 'deleted';
+        $classroom->status = 'archive';
         $classroom->save();
     }
 
