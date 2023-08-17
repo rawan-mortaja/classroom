@@ -10,7 +10,7 @@ class ClassworkUser extends Pivot
 {
     use HasFactory;
 
-    
+
     public function setUpdatedAt($value)
     {
         // $this->{$this->getUpdatedAtColumn()} = $value;
@@ -22,4 +22,7 @@ class ClassworkUser extends Pivot
         return $this;
     }
 
+    public function getUpdatedAtColumn()
+    {
+    }
 }

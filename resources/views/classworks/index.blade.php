@@ -71,14 +71,13 @@
             </div>
         </h3>
         <hr>
-        <form action="{{ URL::current() }}" method="get">
-            <div class="col-12">
+        <form action="{{ URL::current() }}" method="get" class="row row-cols-lg-auto g-3 align-items-center">
+            <div class="col- d-flex">
                 <input type="text" placeholder="search" name="search" class="form-control">
-            </div>
-            <div class="col-12">
                 <button class="btn btn-primary ms-2" type="submit">Find</button>
             </div>
         </form>
+
 
         {{-- <a class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
                 aria-expanded="false">
@@ -101,8 +100,9 @@
 
         {{-- @forelse ($classworks as $classwork) --}}
         <br>
-        {{-- <h3>{{ $classworks->first()->topic->name }}</h3> --}}
+
         <div class="accordion accordion-flush" id="accordionFlushExample">
+            {{-- <h3>{{ $classworks->first()->topic->name }}</h3> --}}
             @foreach ($classworks as $classwork)
                 <div class="accordion-item">
                     <h2 class="accordion-header">
@@ -119,10 +119,12 @@
 
                         </div>
                         <div>
+
+                            <a class="btn btn-sm btn-outline-primary"
+                                href="{{ route('classrooms.classworks.show', [$classwork->classroom_id, $classwork->id]) }}">View</a>
                             <a class="btn btn-sm btn-outline-dark"
                                 href="{{ route('classrooms.classworks.edit', [$classwork->classroom_id, $classwork->id]) }}">Edit</a>
-                            <a class="btn btn-sm btn-outline-primary"
-                                href="{{ route('classrooms.classworks.show', [$classwork->classroom_id, $classwork->id]) }}">Show</a>
+
                         </div>
                     </div>
             @endforeach

@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
 use Illuminate\Validation\Rule;
+use App\Models\User\Submission;
 
 class ClassworksController extends Controller
 {
@@ -45,8 +46,9 @@ class ClassworksController extends Controller
 
         $classworks = $classroom->classworks()
             ->with('topic') //Eager load
-           ->filter($request->query())
-            ->orderBy('published_at')
+            ->filter($request->query())
+            // ->orderBy('published_at' , 'DESC')
+            ->latest('published_at')
             ->paginate(5); //Query Builder
 
         return view('classworks.index', [
@@ -68,7 +70,7 @@ class ClassworksController extends Controller
         $type = $this->getType($request);
         $classwork = new classwork();
         $classworks  = classwork::all();
-        return view('classworks.create', compact('classroom', 'classwork', 'classworks', 'type'));
+        return view('classworks.create', compact('classroom', 'classwork',  'type'));
     }
 
     /**
@@ -77,7 +79,7 @@ class ClassworksController extends Controller
     public function store(Request $request, Classroom $classroom)
     {
 
-        // dd($request->all());
+
         $type = $this->getType($request);
 
         $request->validate([
@@ -87,7 +89,7 @@ class ClassworksController extends Controller
             'options.grade' => [Rule::requiredIf(fn () => $type == 'assignment' || $type == 'question'), 'numeric', 'min:0'],
             'options.due' => ['nullable', 'date', 'after:published_at'],
         ]);
-
+        // dd($request->all());
         $request->merge([
             'user_id' => Auth::id(),
             'type' => $type,
@@ -136,6 +138,12 @@ class ClassworksController extends Controller
      */
     public function show(Classroom $classroom, classwork $classwork)
     {
+
+        $submissions = Auth::user()
+            ->Submission()
+            ->where('classwork_id', $classwork->id)
+            ->get();
+        // if(){}
         // $invitation_link  = URL::signedRoute('classworks.link', [
         //     // $invitation_link  = URL::temporarySignedRoute('classrooms.join', now()->addHours(3) ,[
         //     'classroom' => $classroom->id,
@@ -143,7 +151,7 @@ class ClassworksController extends Controller
         // ]);
         $classwork->load('comments.user');
 
-        return View::make('classworks.show', compact('classroom', 'classwork'));
+        return View::make('classworks.show', compact('classroom', 'classwork', 'submissions'));
         // ->with([
         //     'invitation_link' => $invitation_link,
         // ]);

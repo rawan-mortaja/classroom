@@ -40,17 +40,17 @@ class classwork extends Model
         });
     }
 
-    public function scopeFilter(Builder $builder , $filters)
+    public function scopeFilter(Builder $builder, $filters)
     {
-       $builder ->when($filters['search'] ?? '', function ($builder, $value) {
-        $builder->where(function ($builder) use ($value) {
-            $builder->where('title', 'LIKE', "%{$value}%")
-                ->orWhere('description', 'LIKE', "%{$value}%");
-        });
-    })
-    ->when($filters['type'] ?? '', function ($builder, $value) {
-        $builder->where('type', 'LIKE', "%{$value}%");
-    });
+        $builder->when($filters['search'] ?? '', function ($builder, $value) {
+            $builder->where(function ($builder) use ($value) {
+                $builder->where('title', 'LIKE', "%{$value}%")
+                    ->orWhere('description', 'LIKE', "%{$value}%");
+            });
+        })
+            ->when($filters['type'] ?? '', function ($builder, $value) {
+                $builder->where('type', 'LIKE', "%{$value}%");
+            });
     }
     public function getPublishedDateAttribute()
     {
@@ -62,7 +62,6 @@ class classwork extends Model
     {
         return $this->belongsTo(Classroom::class);
     }
-
 
     public function topic(): BelongsTo
     {
@@ -78,6 +77,10 @@ class classwork extends Model
     public function comments()
     {
         return $this->morphMany(Comment::class, 'commentable')->latest();
+    }
+    public function submissions()
+    {
+        return $this->hasMany(Submission::class);
     }
     public function setUpdatedAt($value)
     {

@@ -1,5 +1,13 @@
 <x-alert name="error" type="danger" />
-
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 <div class="row">
     <div class="col-md-8">
         <x-from.floating-control name="title" placeholder="Title">
@@ -28,7 +36,7 @@
             @endforeach
         </div>
 
-        @if ($type == 'assignment' ||$type ==  '  question')
+        @if ($type == 'assignment' || $type == 'question')
             <x-from.floating-control name="options[grade]" placeholder="Grade">
                 <x-from.input name="options[grade]" type="number" class="form-control-lg" :value="$classwork->options['grade'] ?? ''"
                     placeholder="Grade" />

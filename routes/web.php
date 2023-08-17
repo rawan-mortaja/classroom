@@ -7,7 +7,9 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\JoinClassroomController;
 use App\Http\Controllers\LinkCopyContorller;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SubmissionController;
 use App\Http\Controllers\TopicsController;
+use App\Models\Submission;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -124,6 +126,15 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('comments', [CommentController::class, 'store'])
         ->name('comments.store');
+
+
+
+    Route::post('classworks/{classwork}/submissions' ,[SubmissionController::class , 'store'])
+        ->name('submission.store');
+    Route::get('submissions/{submission}/file', [SubmissionController::class , 'file'])
+        ->name('submission.file');
+
+
 
 
     // Route::resource('classrooms.classworks' , ClassworksController::class)
