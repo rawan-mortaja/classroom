@@ -3,8 +3,8 @@
 @section('title', 'Create Classwork')
 @section('content')
     <div class="container">
-        <h1>{{ $classroom->name }} (#{{ $classroom->id }})</h1>
-        <h3>Create Classwork</h3>
+        <h2>{{ $classroom->name }}</h2>
+        <h4>Create Classwork</h4>
         <hr>
         <form action="{{ route('classrooms.classworks.store', [$classroom->id, 'type' => $type]) }}" method="POST">
             @csrf

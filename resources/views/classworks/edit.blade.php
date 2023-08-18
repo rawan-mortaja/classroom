@@ -3,8 +3,8 @@
 @section('title', 'Update Classwork')
 @section('content')
     <div class="container">
-        <h1>{{ $classroom->name }} (#{{ $classroom->id }})</h1>
-        <h3>Update Classwork</h3>
+        <h2>{{ $classroom->name }}</h2>
+        <h4>Update Classwork</h4>
         <x-alert name="success" class="alert-success" />
         <x-alert name="error" class="alert-danger" />
         <hr>
