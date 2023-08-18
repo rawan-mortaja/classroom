@@ -113,6 +113,6 @@ class TopicsController extends Controller
         // topic::deleteCoverImage('', '');
         //forceDelete(); حذف بشكل نهائي
 
-        return redirect()->route('topics.trashed');
+        return redirect()->route('topicstrashed');
     }
 }

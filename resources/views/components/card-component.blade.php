@@ -2,7 +2,7 @@
     'classroom', //object,
 ])
 
-<div class="col-lg-4 col-md-6 mt-4 mb-4">
+<div class="col-md-3 mt-4 mb-4">
     <div class="card z-index-2 ">
         <div class="card-header p-0 position-relative mt-n5 mx-3 z-index-2 bg-transparent">
             <div class="bg-light shadow-primary border-radius-lg  pe-1">
@@ -12,7 +12,7 @@
                         width="450"> --}}
                     @if ($classroom->cover_image_path)
                         <img src="{{ asset('storage/' . $classroom->cover_image_path) }}" class="card-img-top"
-                            style=" display: block; box-sizing: border-box; height: 200px; width: 360.7px;"
+                            style=" display: block; box-sizing: border-box; height: 200px; width: 260px;"
                          alt="Classroom Cover Image">
                     @else
                         <img src="https://placehold.co/800x300" class="card-img-top">

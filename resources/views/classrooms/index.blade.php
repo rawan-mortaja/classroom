@@ -14,6 +14,9 @@
         @elseif (session()->has('error'))
             <x-alert name="error" id="error" class="alert-danger" />
         @endif
+        <div>
+            <br>
+        </div>
         <div class="row">
             {{-- <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                 <a class="btn btn-primary btn-group-lg " type="button" href="{{ route('classrooms.create') }}">Create
@@ -21,12 +24,12 @@
                 <a class="btn btn-danger btn-group-lg " type="button" href="{{ route('classrooms.trashed') }}">Trashed
                     Classroom</a>
             </div> --}}
-            <div>
-                <br>
-            </div>
             @foreach ($classrooms as $classroom)
+                {{-- <div class="col-md-4"> --}}
                 <x-card-component :classroom="$classroom" />
+                {{-- </div> --}}
             @endforeach
+
         </div>
     </div>
     {{-- @endif --}}

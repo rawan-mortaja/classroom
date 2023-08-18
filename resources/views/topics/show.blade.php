@@ -2,8 +2,8 @@
 
 @section('title' , 'Topics' )
 @section('content')
-<div class="container">
-    <h1>{{ $topic->name}} (#{{ $topic->id}})</h1>
+<div class="container p-lg-5">
+    <h2>{{ $topic->name}}</h2>
 
     <div class="row">
     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
