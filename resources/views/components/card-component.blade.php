@@ -22,7 +22,7 @@
                 </div>
             </div>
         </div>
-        <div class="card-body">
+        <div class="card-body mt-20">
             <h4 class="mb-0 ">{{ $classroom->name }}</h4>
             <p class="text-sm ">{{ $classroom->section }}-{{ $classroom->room }}</p>
             <hr class="dark horizontal">
