@@ -73,30 +73,32 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="border rounded p-3 bg-light mb-20 ">
-                    <h5>Submissions</h5>
-                    @if ($submissions->count())
-                        <ul>
-                            @foreach ($submissions as $submission)
-                                <li><a href="{{ route('submission.file', $submission->id) }}">File
-                                        #{{ $loop->iteration }}</a></li>
-                            @endforeach
-                        </ul>
-                    @else
-                        <form action="{{ route('submission.store', $classwork->id) }}" method="post"
-                            enctype="multipart/form-data">
-                            @csrf
-                            <x-from.floating-control name="files.0" placeholder="">
-                                <div class="input-text">
-                                    <label for="files">Upload Files</label>
-                                    <x-from.input type="file" name="files[]" multiple placeholder="select Files"
-                                        class="border bg-gray-100" />
-                                </div>
-                            </x-from.floating-control>
-                            <button class="btn btn-primary" type="submit">Submit</button>
-                        </form>
-                    @endif
-                </div>
+                @can('submissionsCreate' , ['App\\Models\classwork' , $classwork])
+                    <div class="border rounded p-3 bg-light mb-20 ">
+                        <h5>Submissions</h5>
+                        @if ($submissions->count())
+                            <ul>
+                                @foreach ($submissions as $submission)
+                                    <li><a href="{{ route('submission.file', $submission->id) }}">File
+                                            #{{ $loop->iteration }}</a></li>
+                                @endforeach
+                            </ul>
+                        @else
+                            <form action="{{ route('submission.store', $classwork->id) }}" method="post"
+                                enctype="multipart/form-data">
+                                @csrf
+                                <x-from.floating-control name="files.0" placeholder="">
+                                    <div class="input-text">
+                                        <label for="files">Upload Files</label>
+                                        <x-from.input type="file" name="files[]" multiple placeholder="select Files"
+                                            class="border bg-gray-100" />
+                                    </div>
+                                </x-from.floating-control>
+                                <button class="btn btn-primary" type="submit">Submit</button>
+                            </form>
+                        @endif
+                    </div>
+                @endcan
             </div>
         </div>
         <div class="row">

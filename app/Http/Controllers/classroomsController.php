@@ -28,6 +28,7 @@ class classroomsController extends Controller
     public function __construct()
     {
         $this->middleware('auth'); // ->only('index')
+        // $this->authorizeResource(Classroom::class);
     }
     //
     public function index(Request $request): Renderable

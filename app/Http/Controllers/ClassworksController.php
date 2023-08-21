@@ -39,6 +39,8 @@ class ClassworksController extends Controller
      */
     public function index(Request $request, Classroom $classroom)
     {
+        // dd($classroom);
+        $this->authorize('view-any', [classwork::class, $classroom]);
 
         // $classworks = classwork::where('classroom_id', '=' . $classroom->id)
         //     ->where('tyoe', '=', classwork::TYPE_ASSIGNMENT)
@@ -67,9 +69,17 @@ class ClassworksController extends Controller
      */
     public function create(Request $request, Classroom $classroom, classwork $classwork)
     {
-        if (!Gate::allows('classworks.create', [$classroom])) {
-            abort(403);
-        } // excute Authorization
+        $this->authorize('create', [classwork::class, $classroom]);
+        // $response = Gate::inspect('classworks.create', [$classroom]);
+        // if (!$response->allowed()) {
+        //     abort(403, $response->message());
+        // }
+
+        // Gate::authorize('classworks.create', [$classroom]);
+        // if (!Gate::allows('classworks.create', [$classroom])) {
+        //     abort(403);
+        // } // excute Authorization
+
         // Gate::authorize('classworks.create' , $classroom);
         $type = $this->getType($request);
         $classwork = new classwork();
@@ -84,10 +94,12 @@ class ClassworksController extends Controller
      */
     public function store(Request $request, Classroom $classroom)
     {
-
+        $this->authorize('create', [classwork::class, $classroom]);
+        // if (Gate::denies('classworks.create', [$classroom])) {
+        //     abort(403);
+        // } // excute Authorization
 
         $type = $this->getType($request);
-
         $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
@@ -144,6 +156,9 @@ class ClassworksController extends Controller
      */
     public function show(Classroom $classroom, classwork $classwork)
     {
+        $this->authorize('view', $classwork);
+        // Gate::authorize('classworks.create', [$classwork]);
+
 
         $submissions = Auth::user()
             ->Submission()
@@ -168,6 +183,7 @@ class ClassworksController extends Controller
      */
     public function edit(Request $request, Classroom $classroom, classwork $classwork)
     {
+        $this->authorize('update', $classwork);
         $classwork = $classroom->classworks()
             ->findOrFail($classwork->id);
         $type = $classwork->type->value;
@@ -185,6 +201,7 @@ class ClassworksController extends Controller
     public function update(Request $request, Classroom $classroom, classwork $classwork)
     {
 
+        $this->authorize('update', $classwork);
         $type = $classwork->type;
 
         $validate =  $request->validate([
@@ -205,6 +222,7 @@ class ClassworksController extends Controller
      */
     public function destroy(Classroom $classroom, classwork $classwork)
     {
+        $this->authorize('delete', $classwork);
         $classwork->delete();
 
         return redirect()->route('classrooms.classworks.index', $classroom->id)

@@ -8,6 +8,7 @@ use App\Models\Classroom;
 use App\Models\classwork;
 use App\Models\Scopes\UserClassroomScope;
 use App\Models\User;
+use Illuminate\Auth\Access\Response;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -29,7 +30,14 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(): void
     {
         // Define Gates (abilties)
-        Gate::define('classworks.view', function (User $user, classwork $classwork) { //first option (crrunt) | Scound option ()
+
+        // Gate::before(function (User $user, $ability) {
+        //     if ($user->super_admin) {
+        //         return true;
+        //     }
+        // });
+
+        /*   Gate::define('classworks.view', function (User $user, classwork $classwork) { //first option (crrunt) | Scound option ()
             $teacher = $user->classrooms()
                 ->withoutGlobalScope(UserClassroomScope::class)
                 ->wherePivot('classroom_id', '=', $classwork->classroom_id)
@@ -41,16 +49,23 @@ class AuthServiceProvider extends ServiceProvider
                 ->exists();
 
             return ($teacher || $assigned);
+                // ? Response::allow()
+                // : Response::deny('You are not assigned to this classwork.');
             // return true;
         });
 
         Gate::define('classworks.create', function (User $user, Classroom $classroom) { //first option (crrunt) | Scound option ()
-            return $user->classrooms()
+            $result = $user->classrooms()
+                ->withoutGlobalScope(UserClassroomScope::class)
                 ->wherePivot('classroom_id', '=', $classroom->id)
                 ->wherePivot('role', '=', 'teacher')
                 ->exists();
-            // return true;
+
+            return $result
+                ? Response::allow()
+                : Response::deny('You are not a teacher in this classroom.');
         });
+
 
         Gate::define('classworks.update', function (User $user, classwork $classwork) { //first option (crrunt) | Scound option ()
             return $classwork->uaer_id == $user->id && $user->classrooms()
@@ -68,10 +83,17 @@ class AuthServiceProvider extends ServiceProvider
             // return true;
         });
 
-        Gate::define('submissions.create' , function( User $user , classwork $classwork){
+        Gate::define('submissions.create', function (User $user, classwork $classwork) {
             $teacher = $user->classrooms()
-                ->wherePivot('classroom_id' , '=' , $classwork->classroom_id)
-                ->wherePivot();
-        });
+                ->wherePivot('classroom_id', '=', $classwork->classroom_id)
+                ->wherePivot('role', '=', 'teacher')
+                ->exists();
+            if ($teacher) {
+                return false;
+            }
+            return $user->classworks()
+                ->wherePivot('classwork_id', '=', $classwork->id)
+                ->exists();
+        });*/
     }
 }

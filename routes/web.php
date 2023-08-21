@@ -9,6 +9,7 @@ use App\Http\Controllers\LinkCopyContorller;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SubmissionController;
 use App\Http\Controllers\TopicsController;
+use App\Models\classwork;
 use App\Models\Submission;
 use Illuminate\Support\Facades\Route;
 
@@ -129,9 +130,11 @@ Route::middleware(['auth'])->group(function () {
 
 
 
-    Route::post('classworks/{classwork}/submissions' ,[SubmissionController::class , 'store'])
-        ->name('submission.store');
-    Route::get('submissions/{submission}/file', [SubmissionController::class , 'file'])
+    Route::post('classworks/{classwork}/submissions', [SubmissionController::class, 'store'])
+        ->name('submission.store')
+        ->middleware('can:create , APP\Model\classwork');
+
+    Route::get('submissions/{submission}/file', [SubmissionController::class, 'file'])
         ->name('submission.file');
 
 

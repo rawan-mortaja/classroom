@@ -9,23 +9,25 @@
         <div class="row">
             <div class="col-md-7">
                 <h4>Classwork
-                    <div class="dropdown">
-                        <a class="btn btn-secondary dropdown-toggle shadow-primary" type="button" id="dropdownMenuButton1"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            + Create
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                            <li><a class="dropdown-item"
-                                    href="{{ route('classrooms.classworks.create', ['classroom' => $classroom->id, 'type' => 'assignment']) }}">Assignment</a>
-                            </li>
-                            <li><a class="dropdown-item"
-                                    href="{{ route('classrooms.classworks.create', ['classroom' => $classroom->id, 'type' => 'question']) }}">Question</a>
-                            </li>
-                            <li><a class="dropdown-item"
-                                    href="{{ route('classrooms.classworks.create', ['classroom' => $classroom->id, 'type' => 'material']) }}">Material</a>
-                            </li>
-                        </ul>
-                    </div>
+                    @can('create', ['App\\Models\classwork', $classroom])
+                        <div class="dropdown">
+                            <a class="btn btn-secondary dropdown-toggle shadow-primary" type="button" id="dropdownMenuButton1"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                + Create
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                <li><a class="dropdown-item"
+                                        href="{{ route('classrooms.classworks.create', ['classroom' => $classroom->id, 'type' => 'assignment']) }}">Assignment</a>
+                                </li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('classrooms.classworks.create', ['classroom' => $classroom->id, 'type' => 'question']) }}">Question</a>
+                                </li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('classrooms.classworks.create', ['classroom' => $classroom->id, 'type' => 'material']) }}">Material</a>
+                                </li>
+                            </ul>
+                        </div>
+                    @endcan
                 </h4>
             </div>
             <div class="col-md-5">
