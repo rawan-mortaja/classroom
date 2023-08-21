@@ -2,6 +2,7 @@
 
 @section('title', 'Show Classwork')
 @section('content')
+    @include('classrooms.navbar')
     {{-- @include('./classrooms.index') --}}
     <div class="containe p-lg-4">
         <h2> {{ $classroom->name }} </h2>

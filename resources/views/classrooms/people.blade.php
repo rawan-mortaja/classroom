@@ -12,11 +12,11 @@
 
             <h4>Teachers</h4>
             <div class="card">
-                <table class="table align-items-center mb-0">
+                <table class="table align-items-center mb-0 col-md-6">
                     <thead>
                         <th></th>
                         <th class="text-uppercase text-primary text-s font-weight-bolder opacity-7">Name</th>
-                        <th class="text-uppercase text-primary text-s font-weight-bolder opacity-7 ps-2">Role</th>
+                        {{-- <th class="text-uppercase text-primary text-s font-weight-bolder opacity-7 ps-2">Role</th> --}}
                         <th class="text-center text-uppercase text-primary text-xxs font-weight-bolder opacity-7"></th>
                     </thead>
                     <tbody>
@@ -24,7 +24,7 @@
                             <tr>
                                 <td class="align-middle "></td>
                                 <td class="align-middle ">{{ $tech->name }}</td>
-                                <td class="align-middle">{{ $tech->pivot->role }}</td>
+                                {{-- <td class="align-middle">{{ $tech->pivot->role }}</td> --}}
                                 <td>
                                     <div class="dropdown">
                                         <a type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -58,11 +58,11 @@
             <br>
             <h4>Students</h4>
             <div class="card">
-                <table class="table align-items-center mb-0">
+                <table class="table align-items-center mb-0 col-md-6">
                     <thead>
                         <th></th>
                         <th class="text-uppercase text-primary  text-s font-weight-bolder opacity-7">Name</th>
-                        <th class="text-uppercase text-primary text-s font-weight-bolder opacity-7 ps-2">Role</th>
+                        {{-- <th class="text-uppercase text-primary text-s font-weight-bolder opacity-7 ps-2">Role</th> --}}
                         <th class="text-center text-uppercase text-primary text-xxs font-weight-bolder opacity-7"></th>
                     </thead>
                     <tbody>
@@ -70,7 +70,7 @@
                         <tr>
                             <td class="align-middle"></td>
                             <td class="align-middle ">{{ $user->name }}</td>
-                            <td class="align-middle">{{ $user->pivot->role }}</td>
+                            {{-- <td class="align-middle">{{ $user->pivot->role }}</td> --}}
                             <td >
                                 <div class="dropdown">
                                     <a type="button" data-bs-toggle="dropdown" aria-expanded="false">

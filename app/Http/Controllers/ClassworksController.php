@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
 use Illuminate\Validation\Rule;
 use App\Models\User\Submission;
+use Illuminate\Support\Facades\Gate;
 
 class ClassworksController extends Controller
 {
@@ -66,10 +67,15 @@ class ClassworksController extends Controller
      */
     public function create(Request $request, Classroom $classroom, classwork $classwork)
     {
-
+        if (!Gate::allows('classworks.create', [$classroom])) {
+            abort(403);
+        } // excute Authorization
+        // Gate::authorize('classworks.create' , $classroom);
         $type = $this->getType($request);
         $classwork = new classwork();
         $classworks  = classwork::all();
+
+
         return view('classworks.create', compact('classroom', 'classwork',  'type'));
     }
 
