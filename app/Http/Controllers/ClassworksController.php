@@ -40,7 +40,7 @@ class ClassworksController extends Controller
     public function index(Request $request, Classroom $classroom)
     {
         // dd($classroom);
-        $this->authorize('view-any', [classwork::class, $classroom]);
+        $this->authorize('viewAny', [classwork::class, $classroom]);
 
         // $classworks = classwork::where('classroom_id', '=' . $classroom->id)
         //     ->where('tyoe', '=', classwork::TYPE_ASSIGNMENT)

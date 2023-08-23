@@ -102,11 +102,13 @@ class ClassworkPolicy
             ->wherePivot('classroom_id', '=', $classwork->classroom_id)
             ->wherePivot('role', '=', 'teacher')
             ->exists();
+
         if ($teacher) {
             return false;
+        } else {
+            return $user->classworks()
+                ->wherePivot('classwork_id', '=', $classwork->id)
+                ->exists();
         }
-        return $user->classworks()
-            ->wherePivot('classwork_id', '=', $classwork->id)
-            ->exists();
     }
 }
