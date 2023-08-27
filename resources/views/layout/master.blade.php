@@ -123,6 +123,9 @@
     <title>
         @yield('title', config('app.name'))
     </title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.rtl.min.css"
+        integrity="sha384-gXt9imSW0VcJVHezoNQsP+TNrjYXoGcrqBZJpry9zJt8PCQjobwmhMGaDHTASo9N" crossorigin="anonymous">
+
 
     <!--     Fonts and icons     -->
     <link rel="stylesheet" type="text/css"
@@ -389,16 +392,16 @@
                 </div>
 
                 <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
-                    <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24"
-                                height="24">
+                    <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi"
+                                width="24" height="24">
                                 <use xlink:href="#twitter"></use>
                             </svg></a></li>
-                    <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24"
-                                height="24">
+                    <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi"
+                                width="24" height="24">
                                 <use xlink:href="#instagram"></use>
                             </svg></a></li>
-                    <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24"
-                                height="24">
+                    <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi"
+                                width="24" height="24">
                                 <use xlink:href="#facebook"></use>
                             </svg></a></li>
                 </ul>

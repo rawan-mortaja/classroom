@@ -9,6 +9,7 @@ use App\Http\Controllers\LinkCopyContorller;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SubmissionController;
 use App\Http\Controllers\TopicsController;
+use App\Http\Middleware\ApplyUserPreferences;
 use App\Models\classwork;
 use App\Models\Submission;
 use Illuminate\Support\Facades\Route;
@@ -91,7 +92,7 @@ Route::delete('/classrooms/trashed/{classroom}', [classroomsController::class, '
     ->name('classrooms.forcedelete');
 
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth' , ApplyUserPreferences::class])->group(function () {
     Route::prefix('/topics/trashed')
         ->as('topics')
         ->controller(TopicsController::class)

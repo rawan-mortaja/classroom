@@ -134,6 +134,10 @@ class Classroom extends Model
         //->wherePivot('role' , '=' , 'teacher');
     }
 
+    public function streams()
+    {
+        return $this->hasMany(Stream::class)->latest();
+    }
     public function createdClassrooms()
     {
         return $this->hasMany(Classroom::class, 'user_id');

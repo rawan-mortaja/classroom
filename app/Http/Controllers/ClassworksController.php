@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ClassworkCreated;
 use App\Models\Classroom;
 use App\Models\classwork;
 use App\Models\User;
@@ -37,7 +38,7 @@ class ClassworksController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request, Classroom $classroom)
+    public function index(Request $request, Classroom $classroom, classwork $classwork)
     {
         // dd($classroom);
         $this->authorize('viewAny', [classwork::class, $classroom]);
@@ -53,6 +54,8 @@ class ClassworksController extends Controller
             // ->orderBy('published_at' , 'DESC')
             ->latest('published_at')
             ->paginate(5); //Query Builder
+
+        // event('classwork.create' , [$classroom , $classwork]);
 
         return view('classworks.index', [
             'classroom' => $classroom,
@@ -141,14 +144,17 @@ class ClassworksController extends Controller
                 $classwork->users()->attach($request->input('students'));
 
                 // dd($request->all());
+
+                event(new ClassworkCreated($classwork));
+                // ClassworkCreated::dispatch($classwork);
             });
-        } catch (QueryException $e) {
+        } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());
         }
 
         return redirect()
             ->route('classrooms.classworks.index', $classroom->id)
-            ->with('succes', 'classwork craeted successfully');
+            ->with('succes', __('classwork craeted successfully'));
     }
 
     /**
@@ -214,7 +220,7 @@ class ClassworksController extends Controller
 
         $classwork->update($request->all());
         return View::make('classworks.show', compact('classroom', 'classwork'))
-            ->with('success', 'Classwork Updated');
+            ->with('success', __('Classwork Updated'));
     }
 
     /**
