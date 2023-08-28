@@ -149,6 +149,7 @@ class ClassworksController extends Controller
                 // ClassworkCreated::dispatch($classwork);
             });
         } catch (\Exception $e) {
+            throw $e;
             return back()->with('error', $e->getMessage());
         }
 

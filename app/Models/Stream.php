@@ -9,14 +9,14 @@ use Illuminate\Support\Str;
 
 class Stream extends Model
 {
-    use HasFactory , HasUuids;
+    use HasFactory, HasUuids;
 
     public $incrementing = false;
 
     protected $keyType = 'string';
 
     protected $fillable = [
-        'user_id', 'classroom_id', 'content', 'link'
+        'classroom_id', 'user_id', 'content', 'link'
     ];
     protected static function booted()
     {

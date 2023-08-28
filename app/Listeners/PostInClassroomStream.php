@@ -30,8 +30,8 @@ class PostInClassroomStream
 
         $content = __(':name posted a new :type : :title', [
             'name' => $classwork->user->name,
-            'type' => __($classwork->type),
-            'titl' => $classwork->title,
+            'type' => __($classwork->type->value),
+            'title' => $classwork->title,
         ]);
         Stream::created([
             'classroom_id' => $classwork->classroom_id,
