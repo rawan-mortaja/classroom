@@ -6,7 +6,7 @@
 
     {{-- <x-main-layout title="Classrooms"> --}}
     <div class="container">
-        <h1> Classrooms</h1>
+        <h1>{!! __('Classrooms') !!}</h1>
         @if (session()->has('success'))
             <div class="alert alert-success" role="alert">
                 {{ session('success') }}

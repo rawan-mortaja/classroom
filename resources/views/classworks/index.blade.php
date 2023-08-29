@@ -5,7 +5,6 @@
     @include('classrooms.navbar')
     <div class="container p-lg-4">
         <h3>{{ $classroom->name }}</h3>
-        <hr>
         <div class="row">
             <div class="col-md-7">
                 <h4>Classwork
@@ -58,13 +57,16 @@
                     <div id="flush-collapse{{ $classwork->id }}" class="accordion-collapse collapse"
                         data-bs-parent="#accordionFlushExample">
                         <div class="accordion-body">
-                            {{ $classwork->description }}
+                            {!! $classwork->description !!}
                         </div>
                         <div>
                             <a class="btn btn-sm btn-primary"
                                 href="{{ route('classrooms.classworks.show', [$classwork->classroom_id, $classwork->id]) }}">View</a>
-                            <a class="btn btn-sm btn-dark"
+                                {{-- @if ($classwork->classroom->teachers) --}}
+                                <a class="btn btn-sm btn-dark"
                                 href="{{ route('classrooms.classworks.edit', [$classwork->classroom_id, $classwork->id]) }}">Edit</a>
+                                {{-- @endif --}}
+
 
                         </div>
                     </div>

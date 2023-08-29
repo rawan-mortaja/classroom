@@ -41,8 +41,11 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li class="text-center">
-                            <a href="{{ route('classrooms.classworks.edit', [$classroom->id, $classwork->id]) }}"
-                                class="btn btn-light text-dark link-underline-opacity-0 text-secondary font-weight-normal text-s">Edit</a>
+                            {{-- @if ($classwork->classroom->role == 'teacher') --}}
+                                <a href="{{ route('classrooms.classworks.edit', [$classroom->id, $classwork->id]) }}"
+                                    class="btn btn-light text-dark link-underline-opacity-0 text-secondary font-weight-normal text-s">Edit</a>
+                            {{-- @endif --}}
+
                         </li>
                         <li class="text-center">
                             <form action="{{ route('classrooms.classworks.destroy', [$classroom->id, $classwork->id]) }}"
@@ -63,17 +66,18 @@
                     </ul>
                 </div>
                 {{-- <hr> --}}
-                <hr>
+
             </div>
+            <hr>
         </div>
         <div class="row">
             <div class="col-md-8">
                 <div>
-                    <p> {{ $classwork->description }}</p>
+                    {!! $classwork->description !!}
                 </div>
             </div>
             <div class="col-md-4">
-                @can('submissionsCreate' , ['App\\Models\classwork' , $classwork])
+                @can('submissionsCreate', ['App\\Models\classwork', $classwork])
                     <div class="border rounded p-3 bg-light mb-20 ">
                         <h5>Submissions</h5>
                         @if ($submissions->count())

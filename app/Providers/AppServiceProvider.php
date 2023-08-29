@@ -26,10 +26,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-
-        
+        // $user = Auth::user();
+        // App::setLocale($user->profile->locale);
         // Paginator::useBootstrapFive();
         Paginator::defaultView('vendor.pagination.bootstrap-5');
+        Paginator::defaultSimpleView('vendor.pagination.simple-bootstrap-5');
+
         Relation::enforceMorphMap([
             'classwork' => classwork::class,
             'Post' => Post::class,

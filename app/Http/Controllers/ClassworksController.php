@@ -53,6 +53,30 @@ class ClassworksController extends Controller
             ->filter($request->query())
             // ->orderBy('published_at' , 'DESC')
             ->latest('published_at')
+            ->where(function ($query) {
+                $query->WhereHas('users', function ($query) {
+                    $query->where('id', '=', Auth::id());
+                })
+                    ->orWhereHas('classroom.teachers', function ($query) {
+                        $query->where('id', '=', Auth::id());
+                    });
+            })
+            /* ->where(function ($query) {
+                $query->whereRaw('EXISTS (SELECT 1 FROM classwork_user
+                WHERE classwork_user.classwork_id = classworks.id
+                AND classwork_user.user_id = ?
+                )', [
+                    Auth::id()
+                ]);
+                $query->orWhereRaw('EXISTS (SELECT 1 FROM classroom_user
+                WHERE classroom_user.classroom_id = classworks.classroom_id
+                AND classroom_user.user_id = ?
+                AND classroom_user.role = ?
+                )', [
+                    Auth::id(),
+                    'teacher',
+                ]);
+            })*/
             ->paginate(5); //Query Builder
 
         // event('classwork.create' , [$classroom , $classwork]);
@@ -119,6 +143,9 @@ class ClassworksController extends Controller
         try {
 
             DB::transaction(function () use ($classroom, $request) {
+
+                // strip_tags('');
+
                 // $data = [
                 //     'user_id' => Auth::id(),
                 //     'type' => $type,
@@ -149,7 +176,7 @@ class ClassworksController extends Controller
                 // ClassworkCreated::dispatch($classwork);
             });
         } catch (\Exception $e) {
-            throw $e;
+            // throw $e;
             return back()->with('error', $e->getMessage());
         }
 
@@ -190,7 +217,7 @@ class ClassworksController extends Controller
      */
     public function edit(Request $request, Classroom $classroom, classwork $classwork)
     {
-        $this->authorize('update', $classwork);
+        // $this->authorize('update', $classwork);
         $classwork = $classroom->classworks()
             ->findOrFail($classwork->id);
         $type = $classwork->type->value;
@@ -208,13 +235,14 @@ class ClassworksController extends Controller
     public function update(Request $request, Classroom $classroom, classwork $classwork)
     {
 
-        $this->authorize('update', $classwork);
+        // $this->authorize('update', $classwork);
         $type = $classwork->type;
 
         $validate =  $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
             'topic_id' => ['nullable', 'int', 'exists:topics,id'],
+            // 'student' => ['nullable'],
             'options.grade' => [Rule::requiredIf(fn () => $type == 'assignment' || 'question'), 'numeric', 'min:0'],
             'options.due' => ['nullable', 'date', 'after:published_at'],
         ]);

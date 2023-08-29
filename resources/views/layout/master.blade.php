@@ -123,9 +123,17 @@
     <title>
         @yield('title', config('app.name'))
     </title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.rtl.min.css"
-        integrity="sha384-gXt9imSW0VcJVHezoNQsP+TNrjYXoGcrqBZJpry9zJt8PCQjobwmhMGaDHTASo9N" crossorigin="anonymous">
-
+    @if (App::isLocale('ar'))
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.rtl.min.css"
+            integrity="sha384-gXt9imSW0VcJVHezoNQsP+TNrjYXoGcrqBZJpry9zJt8PCQjobwmhMGaDHTASo9N" crossorigin="anonymous">
+    @else
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous">
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js"
+            integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous">
+        </script>
+    @endif
 
     <!--     Fonts and icons     -->
     <link rel="stylesheet" type="text/css"
@@ -148,7 +156,7 @@
     <!-- Nepcha Analytics (nepcha.com) -->
     <!-- Nepcha is a easy-to-use web analytics. No cookies and fully compliant with GDPR, CCPA and PECR. -->
     <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
-
+    @stack('styles')
 </head>
 
 <body class="g-sidenav-show  bg-gray-100">
@@ -517,6 +525,7 @@
 
     <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
     <script src="./assets/js/material-dashboard.min.js?v=3.1.0"></script>
+    @stack('scripts')
 </body>
 
 </html>
