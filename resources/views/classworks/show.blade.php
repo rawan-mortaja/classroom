@@ -42,8 +42,8 @@
                     <ul class="dropdown-menu">
                         <li class="text-center">
                             {{-- @if ($classwork->classroom->role == 'teacher') --}}
-                                <a href="{{ route('classrooms.classworks.edit', [$classroom->id, $classwork->id]) }}"
-                                    class="btn btn-light text-dark link-underline-opacity-0 text-secondary font-weight-normal text-s">Edit</a>
+                            <a href="{{ route('classrooms.classworks.edit', [$classroom->id, $classwork->id]) }}"
+                                class="btn btn-light text-dark link-underline-opacity-0 text-secondary font-weight-normal text-s">Edit</a>
                             {{-- @endif --}}
 
                         </li>

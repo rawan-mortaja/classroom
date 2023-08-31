@@ -62,10 +62,10 @@
                         <div>
                             <a class="btn btn-sm btn-primary"
                                 href="{{ route('classrooms.classworks.show', [$classwork->classroom_id, $classwork->id]) }}">View</a>
-                                {{-- @if ($classwork->classroom->teachers) --}}
-                                <a class="btn btn-sm btn-dark"
+                            {{-- @if ($classwork->classroom->teachers) --}}
+                            <a class="btn btn-sm btn-dark"
                                 href="{{ route('classrooms.classworks.edit', [$classwork->classroom_id, $classwork->id]) }}">Edit</a>
-                                {{-- @endif --}}
+                            {{-- @endif --}}
 
 
                         </div>
@@ -85,8 +85,8 @@
 
     @push('scripts')
         <script>
-            const classroomId = "{{ $classwork->classroom_id }}";
+            classroomId = "{{ $classwork->classroom_id }}";
         </script>
-        @vite(['resources/js/app.js'])
+        {{-- @vite(['resources/js/app.js']) --}}
     @endpush
 @endsection

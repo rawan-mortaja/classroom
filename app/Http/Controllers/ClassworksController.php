@@ -257,7 +257,7 @@ class ClassworksController extends Controller
      */
     public function destroy(Classroom $classroom, classwork $classwork)
     {
-        $this->authorize('delete', $classwork);
+        // $this->authorize('delete', $classwork);
         $classwork->delete();
 
         return redirect()->route('classrooms.classworks.index', $classroom->id)

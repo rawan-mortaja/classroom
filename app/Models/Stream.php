@@ -13,11 +13,11 @@ class Stream extends Model
 
     public $incrementing = false;
 
-    protected $keyType = 'string';
-
-    protected $fillable = [
-        'classroom_id', 'user_id', 'content', 'link'
-    ];
+    protected $keyType = 'string'; 
+    protected $guarded = [];
+    // protected $fillable = [
+    //     'classroom_id', 'user_id', 'content', 'link'
+    // ];
     protected static function booted()
     {
         // static::creating(function (Stream $stream) {

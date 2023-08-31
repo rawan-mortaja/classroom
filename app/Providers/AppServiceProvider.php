@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\classwork;
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Pagination\Paginator;
@@ -35,6 +36,7 @@ class AppServiceProvider extends ServiceProvider
         Relation::enforceMorphMap([
             'classwork' => classwork::class,
             'Post' => Post::class,
+            'user' =>User::class,
         ]);
     }
 }

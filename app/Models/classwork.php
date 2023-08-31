@@ -68,6 +68,10 @@ class classwork extends Model
         return $this->belongsTo(Topic::class);
     }
 
+    public function stream(){
+        return $this->belongsTo(Stream::class);
+    }
+
     public function users()
     {
         return $this->belongsToMany(User::class)

@@ -33,7 +33,8 @@ class PostInClassroomStream
             'type' => __($classwork->type->value),
             'title' => $classwork->title,
         ]);
-        Stream::created([
+        Stream::create([
+            'id' => Str::uuid(),
             'classroom_id' => $classwork->classroom_id,
             'user_id' => $classwork->user_id,
             'content' => $content,

@@ -18,7 +18,7 @@
         <div class="input-group input-group-outline">
             <x-from.floating-control name="description" placeholder="Description (Optional)">
                 <x-from.textarea name="description" class="form-control" :value="$classwork->description"
-                    placeholder="Description (Optional)"/>
+                    placeholder="Description (Optional)" />
             </x-from.floating-control>
         </div>
     </div>
@@ -83,26 +83,20 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> --}}
 @endpush
 @push('scripts')
-    <script src="https://cdn.tiny.cloud/1/7p63zvbxf4482hgw7pny26jmnzo14qjsdwsfz864cviy4dgq/tinymce/6/tinymce.min.js"
+    <script src="https://cdn.tiny.cloud/1/t5a3g0m1gxjnt6zrjk7rza947sv4cxlxl32fdrobvl0omg85/tinymce/6/tinymce.min.js"
         referrerpolicy="origin"></script>
-    <script>
-        tinymce.init({
-            selector: '#description',
-            plugins: 'ai tinycomments mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss',
-            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
-            tinycomments_mode: 'embedded',
-            tinycomments_author: 'Author name',
-            mergetags_list: [{
-                    value: 'First.Name',
-                    title: 'First Name'
-                },
-                {
-                    value: 'Email',
-                    title: 'Email'
-                },
-            ],
-            ai_request: (request, respondWith) => respondWith.string(() => Promise.reject(
-                "See docs to implement AI Assistant"))
-        });
-    </script>
+        <script>
+            tinymce.init({
+              selector: '#description',
+              plugins: 'ai tinycomments mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss',
+              toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+              tinycomments_mode: 'embedded',
+              tinycomments_author: 'Author name',
+              mergetags_list: [
+                { value: 'First.Name', title: 'First Name' },
+                { value: 'Email', title: 'Email' },
+              ],
+              ai_request: (request, respondWith) => respondWith.string(() => Promise.reject("See docs to implement AI Assistant"))
+            });
+          </script>
 @endpush

@@ -31,7 +31,7 @@ class NewClassworkNotification extends Notification
     {
         // channels : mail , database , brodcast(pusher) , vonage (sms) , slack
 
-        $via =  ['database', 'mail',  'broadcast'];
+        $via =  ['database', 'broadcast',  'mail'];
         // $via = ['database'];
         // if($notifiable->receive_mail_notifications){
         //     $via[] = 'mail';

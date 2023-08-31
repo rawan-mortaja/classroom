@@ -1,7 +1,8 @@
 <?php
 
-namespace Listeners\APP\Listeners;
+namespace App\Listeners;
 
+use App\Events\ClassworkCreated;
 use App\Models\User;
 use App\Notifications\NewClassworkNotification;
 use Events\APP\Events\ClassworkUpdated;
@@ -22,7 +23,7 @@ class SendNotificationToAssignedStudents
     /**
      * Handle the event.
      */
-    public function handle(ClassworkUpdated $event): void
+    public function handle(ClassworkCreated $event): void
     {
         //
         $user = User::find(1);
@@ -32,6 +33,6 @@ class SendNotificationToAssignedStudents
         //     $user->notify(new NewClassworkNotification($event->classwork));
         // }
 
-        Notification::send($event->classwork->users , new NewClassworkNotification($event->classwork));
+        Notification::send($event->classwork->users, new NewClassworkNotification($event->classwork));
     }
 }

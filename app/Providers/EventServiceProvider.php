@@ -4,6 +4,9 @@ namespace App\Providers;
 
 use App\Events\ClassworkCreated;
 use App\Listeners\PostInClassroomStream;
+use \APP\Events\ClassworkUpdated;
+// use APP\Listeners\SendNotificationToAssignedStudents;
+use \APP\Listeners\SendNotificationToAssignedStudents;
 use App\Models\Classroom;
 use App\Observers\ClassroomObserver;
 use Illuminate\Auth\Events\Registered;
@@ -22,14 +25,13 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         Registered::class => [
             SendEmailVerificationNotification::class,
+
         ],
         ClassworkCreated::class => [
             PostInClassroomStream::class,
+            'App\Listeners\SendNotificationToAssignedStudents',
         ],
 
-        \APP\Events\ClassworkUpdated::class => [
-            \APP\Listeners\SendNotificationToAssignedStudents::class
-        ],
     ];
 
     // protected $observers = [
