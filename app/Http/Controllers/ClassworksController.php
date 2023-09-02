@@ -35,9 +35,15 @@ class ClassworksController extends Controller
 
         return $type;
     }
+
+    protected function teacherClassworks()
+    {
+    }
     /**
      * Display a listing of the resource.
      */
+
+
     public function index(Request $request, Classroom $classroom, classwork $classwork)
     {
         // dd($classroom);
@@ -50,6 +56,18 @@ class ClassworksController extends Controller
 
         $classworks = $classroom->classworks()
             ->with('topic') //Eager load
+            ->withCount([
+                'users as assigned_count' => function ($query) {
+                    $query->where('classwork_user.status', '=', 'assigned');
+                },
+                'users as turnedin_count' => function ($query) {
+                    $query->where('classwork_user.status', '=', 'submitted');
+                },
+                'users as graded_count' => function ($query) {
+                    $query->whereNotNull('classwork_user.grade');
+                },
+
+            ])
             ->filter($request->query())
             // ->orderBy('published_at' , 'DESC')
             ->latest('published_at')
@@ -77,7 +95,7 @@ class ClassworksController extends Controller
                     'teacher',
                 ]);
             })*/
-            ->paginate(5); //Query Builder
+            ->paginate(); //Query Builder
 
         // event('classwork.create' , [$classroom , $classwork]);
 

@@ -132,8 +132,8 @@ Route::middleware(['auth' , ApplyUserPreferences::class])->group(function () {
 
 
     Route::post('classworks/{classwork}/submissions', [SubmissionController::class, 'store'])
-        ->name('submission.store')
-        ->middleware('can:create , APP\Model\classwork');
+        ->name('submission.store');
+        // ->middleware('can:create , APP\Model\classwork');
 
     Route::get('submissions/{submission}/file', [SubmissionController::class, 'file'])
         ->name('submission.file');

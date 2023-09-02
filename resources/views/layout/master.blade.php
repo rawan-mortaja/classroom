@@ -134,7 +134,7 @@
             integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous">
         </script>
     @endif
-
+    <script src="https://cdn.tiny.cloud/1/t5a3g0m1gxjnt6zrjk7rza947sv4cxlxl32fdrobvl0omg85/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
     <!--     Fonts and icons     -->
     <link rel="stylesheet" type="text/css"
         href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
