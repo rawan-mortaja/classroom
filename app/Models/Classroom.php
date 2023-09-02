@@ -29,6 +29,15 @@ class Classroom extends Model
         'cover_image_path', 'code', 'user_id',
     ]; // تحديد المسموح (white list)
 
+    protected $appends = [
+        'cover_image_url',
+        // 'user_name',
+    ];
+
+    protected $hidden = [
+        'cover_image_path',
+        'deleted_at',
+    ];
 
 
     // protected $guarded = ['id'];// تحديد الممنوع (Black list)
@@ -116,10 +125,10 @@ class Classroom extends Model
         return $this->hasMany(classwork::class, 'classroom_id', 'id');
     }
 
-    public function classwork(): BelongsTo
-    {
-        return $this->belongsTo(classwork::class);
-    }
+    // public function classwork(): BelongsTo
+    // {
+    //     return $this->belongsTo(classwork::class);
+    // }
     public function topics(): HasMany
     {
         return $this->hasMany(Topic::class, 'classroom_id', 'id');
@@ -187,15 +196,16 @@ class Classroom extends Model
         return strtoupper($value);
     }
 
-    // public function getCoverImagePathAttribute($value)
-    // {
-    //     if($this->cover_image_path){
-    //         return  Storage::disk('public')->url($this);
-    //         // asset('storage/' . $va);
-    //     }
 
-    //     return 'https://placehold.co/800x300';
-    // }
+    public function getCoverImageUrlAttribute() //ما رح نمرر فاليو لانه اساس الاتربيوت مش موجود
+    {
+        //$classroom->cover_image_url
+        if ($this->cover_image_path) {
+            return Storage::disk('uploads')->url($this->cover_image_path);
+        }
+        return 'https://placehold.co/800x300';
+    }
+
 
     public function getUrlAttribute()
     {

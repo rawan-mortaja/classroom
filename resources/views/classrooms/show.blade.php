@@ -40,7 +40,7 @@
             <div class="col-md-9">
                 @foreach ($classroom->stream as $stream)
                     <div class="card card-background-mask-light align-items-start mt-4 p-2">
-                        <a href="">
+                        <a href="{{ $stream->link}}">
                             <h6 class="card-text flex-1 m-3 " style="bold">
                                 <i class="fa fa-file-text badge-primary" aria-hidden="true" style="margin-right: 10px;"></i>
                                 {{ $stream->content }}
