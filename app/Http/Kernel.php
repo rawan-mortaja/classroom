@@ -3,6 +3,7 @@
 namespace App\Http;
 
 use App\Http\Middleware\ApplyUserPreferences;
+// use App\Http\Middleware\CheckAPIKey;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -45,6 +46,7 @@ class Kernel extends HttpKernel
             \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
             \Illuminate\Routing\Middleware\ThrottleRequests::class . ':api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \App\Http\Middleware\CheckAPIKey::class,
         ],
     ];
 
