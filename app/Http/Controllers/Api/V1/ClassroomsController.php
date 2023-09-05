@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ClassroomResource;
 use App\Models\Classroom;
 use Exception;
 use Illuminate\Http\Request;
@@ -20,10 +21,11 @@ class ClassroomsController extends Controller
             ->withCount('students as student')
             ->paginate(2);
 
-        return Response::json($classroom, 200, [
-            'x-test' => 'test'
-        ]);
+        return ClassroomResource::collection($classroom);
+        // return new ClassroomCollection($classroom);
+
     }
+
 
 
     /**

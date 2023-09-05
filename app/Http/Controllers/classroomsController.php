@@ -33,6 +33,9 @@ class classroomsController extends Controller
     //
     public function index(Request $request): Renderable
     {
+        if (!Auth::guard('sanctum')->user()->tokenCan('Calssrooms.read')) {
+            abort(403);
+        }
         // return response : view , redirect , json-data , file , String
         // return 'Hello World!';
 
@@ -78,6 +81,9 @@ class classroomsController extends Controller
     }
     public function create()
     {
+        if (!Auth::guard('sanctum')->user()->tokenCan('Calssrooms.create')) {
+            abort(403);
+        }
         return view('classrooms.create', [
             'classroom' => new Classroom(),
         ]);
@@ -86,7 +92,9 @@ class classroomsController extends Controller
 
     public function store(classroomRequest $request): RedirectResponse
     {
-
+        if (!Auth::guard('sanctum')->user()->tokenCan('Calssrooms.create')) {
+            abort(403);
+        }
         // $request->merge([
         //     'code' => Str::random(6)
         // ]); //تستخدم للحقول الغير موجودة بالجدول
@@ -212,11 +220,14 @@ class classroomsController extends Controller
     }
     public function show(Classroom $classroom)
     {
+        if (!Auth::guard('sanctum')->user()->tokenCan('Calssrooms.read')) {
+            abort(403);
+        }
         // $classroom = classroom::where('id' , '=' , $id)->first();
         // $classroom = Classroom::withTrashed()->findOrFail($id);
         // $classroom = Classroom::where('user_id' , Auth::id())->findOrFail($id);
         $invitation_link  = URL::signedRoute('classrooms.join', [
-        // $invitation_link  = URL::temporarySignedRoute('classrooms.join', now()->addHours(3) ,[
+            // $invitation_link  = URL::temporarySignedRoute('classrooms.join', now()->addHours(3) ,[
             'classroom' => $classroom->id,
             'code' => $classroom->code,
         ]);
@@ -231,7 +242,9 @@ class classroomsController extends Controller
 
     public function edit($id)
     {
-
+        if (!Auth::guard('sanctum')->user()->tokenCan('Calssrooms.edit')) {
+            abort(403);
+        }
         $classroom = Classroom::find($id);
         return view('classrooms.edit', [
             'classroom' => $classroom,
@@ -240,6 +253,9 @@ class classroomsController extends Controller
 
     public function update(classroomRequest $request, Classroom $classroom)
     {
+        if (!Auth::guard('sanctum')->user()->tokenCan('Calssrooms.update')) {
+            abort(403);
+        }
 
         //لا احتاج الي عمل vlidtion لانه هيتم استدعاء ملف ال Rules الذي تم انشائه في مجلد publish
 
@@ -323,6 +339,9 @@ class classroomsController extends Controller
 
     public function destroy(Classroom $classroom)
     {
+        if (!Auth::guard('sanctum')->user()->tokenCan('Calssrooms.delete')) {
+            abort(403);
+        }
         // $classroom = Classroom::findOrFail($id);
         // $classroom->destroy($id);
 

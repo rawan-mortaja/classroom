@@ -148,6 +148,10 @@ class Classroom extends Model
         //->wherePivot('role' , '=' , 'teacher');
     }
 
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
     public function stream()
     {
         return $this->hasMany(Stream::class)->latest();
