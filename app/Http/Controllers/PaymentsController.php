@@ -14,7 +14,7 @@ class PaymentsController extends Controller
 
     public function create(Subscription $subscription)
     {
-        return view('checkout' , [
+        return view('checkout', [
             'subscription' => $subscription,
         ]);
     }
@@ -46,7 +46,15 @@ class PaymentsController extends Controller
 
     public function seccess(Request $request)
     {
-        return $request->all();
+        // return $request->all();
+
+        $stripe = new StripeClient(config('services.stripe.secret_ket'));
+        $stripe->paymentIntents->retrieve(
+            $payment_intent =  $request->input('payment_intent'),
+            []
+        );
+        dd($payment_intent);
+
     }
 
     public function cancel(Request $request)
