@@ -31,7 +31,7 @@ class ClassroomCollection extends ResourceCollection
                     'theme' => $model->theme,
                 ],
                 'user' => [
-                    'name' => $model->user->name,
+                    'name' => $model->user?->name,
                 ],
             ];
         });

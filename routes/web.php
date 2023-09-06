@@ -1,13 +1,17 @@
 <?php
 
+use App\Http\Controllers\CheckoutsController;
 use App\Http\Controllers\ClassroomPeopleController;
 use App\Http\Controllers\classroomsController;
 use App\Http\Controllers\ClassworksController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\JoinClassroomController;
 use App\Http\Controllers\LinkCopyContorller;
+use App\Http\Controllers\PaymentsController;
+use App\Http\Controllers\PlanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SubmissionController;
+use App\Http\Controllers\SubscriptonsController;
 use App\Http\Controllers\TopicsController;
 use App\Http\Middleware\ApplyUserPreferences;
 use App\Models\classwork;
@@ -92,7 +96,26 @@ Route::delete('/classrooms/trashed/{classroom}', [classroomsController::class, '
     ->name('classrooms.forcedelete');
 
 
-Route::middleware(['auth' , ApplyUserPreferences::class])->group(function () {
+Route::get('plans', [PlanController::class, 'index'])
+    ->name('plans');
+
+Route::middleware(['auth', ApplyUserPreferences::class])->group(function () {
+
+    Route::get('subscriptions/{subscription}/pay', [PaymentsController::class, 'create'])
+        ->name('checkout');
+
+    Route::post('Subscriptions', [SubscriptonsController::class, 'store'])
+        ->name('subscriptions.store');
+
+    Route::post('payments', [PaymentsController::class, 'store'])
+        ->name('payments.store');
+
+    Route::get('payments/success', [PaymentsController::class, 'seccess'])
+        ->name('paymnets.seccess');
+
+    Route::get('payments/cancel', [PaymentsController::class, 'cancel'])
+        ->name('paymnets.cancel');
+
     Route::prefix('/topics/trashed')
         ->as('topics')
         ->controller(TopicsController::class)
@@ -133,7 +156,7 @@ Route::middleware(['auth' , ApplyUserPreferences::class])->group(function () {
 
     Route::post('classworks/{classwork}/submissions', [SubmissionController::class, 'store'])
         ->name('submission.store');
-        // ->middleware('can:create , APP\Model\classwork');
+    // ->middleware('can:create , APP\Model\classwork');
 
     Route::get('submissions/{submission}/file', [SubmissionController::class, 'file'])
         ->name('submission.file');
@@ -146,6 +169,7 @@ Route::middleware(['auth' , ApplyUserPreferences::class])->group(function () {
 
     // Route::get('classrooms/{classroom}/Classworks');
 });
+
 
 // Route::get('/topics/trashed', [TopicsController::class, 'trashed'])
 //     ->name('topics.trashed');

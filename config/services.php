@@ -36,4 +36,9 @@ return [
     ],
 
     'api_key' => env('API_KEY'),
+
+    'stripe' => [
+        'publishable_ke' => env('STRIPE_PUBLISHABLE_KEY'),
+        'secret_ket' => env('STRIPE_SECRET_KEY'),
+    ]
 ];

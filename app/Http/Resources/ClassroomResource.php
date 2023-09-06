@@ -34,7 +34,7 @@ class ClassroomResource extends JsonResource
                 'students_count' => $this->syudents_count ?? 0,
             ],
             'user' => [
-                'name' => $this->user->name,
+                'name' => $this->user?->name,
             ],
         ];
     }
