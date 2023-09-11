@@ -5,10 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use  App\concerns\HasPrice;
 
 class Plan extends Model
 {
-    use HasFactory;
+    use HasFactory, HasPrice;
+
+    protected $guarded = [];
 
     public function features()
     {
@@ -25,11 +28,5 @@ class Plan extends Model
     {
         return $this->belongsToMany(User::class , 'subscriptions');
     }
-    public function price(): Attribute
-    {
-        return new Attribute(
-            get: fn ($price) => $price / 100,
-            set: fn ($price) => $price * 100,
-        );
-    }
+
 }

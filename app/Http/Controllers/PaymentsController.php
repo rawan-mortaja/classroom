@@ -3,21 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\Subscription;
+use App\Services\Payments\StripePayment;
 use Error;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
-use Stripe\Charge;
 use Stripe\StripeClient;
 
 class PaymentsController extends Controller
 {
 
-    public function create(Subscription $subscription)
+    public function create(StripePayment $srtipe, Subscription $subscription)
     {
-        return view('checkout', [
-            'subscription' => $subscription,
-        ]);
+        // Check if susbscription
+        return $srtipe->createCheckoutSession($subscription);
     }
+
     public function store(Request $request)
     {
         $subscription = Subscription::findOrFail($request->subscription_id);
@@ -46,19 +46,11 @@ class PaymentsController extends Controller
 
     public function seccess(Request $request)
     {
-        // return $request->all();
-
-        $stripe = new StripeClient(config('services.stripe.secret_ket'));
-        $stripe->paymentIntents->retrieve(
-            $payment_intent =  $request->input('payment_intent'),
-            []
-        );
-        dd($payment_intent);
-
+        return view('payments.success');
     }
 
     public function cancel(Request $request)
     {
-        return $request->all();
+        return view('payments.cancelled');
     }
 }

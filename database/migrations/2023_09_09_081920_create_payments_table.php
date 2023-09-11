@@ -11,20 +11,24 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('subscriptions', function (Blueprint $table) {
+        Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('plan_id')
-                ->nullable()
-                ->constrained()
-                ->nullOnDelete();
             $table->foreignId('user_id')
                 ->nullable()
                 ->constrained()
                 ->nullOnDelete();
-            $table->timestamp('expires_at');
-            $table->unsignedSmallInteger('price')
-                ->default(0);
-            $table->enum('status' , ['pending' , 'active' ,'expire']);
+            $table->foreignId('subscription_id')
+                ->nullable()
+                ->constrained()
+                ->nullOnDelete();
+            $table->integer('amount');
+            $table->char('currency_code', 3);
+            $table->string('payment_geteway');
+            $table->enum('status', ['pending', 'completed', 'failed']);
+            $table->string('geteway_refernce_id')
+                ->nullable();
+            $table->json('data')
+                ->nullable();
             $table->timestamps();
         });
     }
@@ -34,6 +38,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('subscriptions');
+        Schema::dropIfExists('payments');
     }
 };

@@ -13,6 +13,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SubmissionController;
 use App\Http\Controllers\SubscriptonsController;
 use App\Http\Controllers\TopicsController;
+use App\Http\Controllers\Webhooks\Stripecontroller;
 use App\Http\Middleware\ApplyUserPreferences;
 use App\Models\classwork;
 use App\Models\Submission;
@@ -44,50 +45,6 @@ Route::middleware('auth')->group(function () {
 });
 
 
-// Route::view('/', 'welcome');
-// Classroom
-// Route::get('/classrooms', [classroomsController::class, 'index'])
-//     ->name('classrooms.index');
-
-// Route::get('/classrooms/create', [classroomsController::class, 'create'])
-//     ->name('classrooms.create');
-
-// Route::post('/classrooms', [classroomsController::class, 'store'])
-//     ->name('classrooms.store');
-
-// Route::get('/classrooms/{classroom}', [classroomsController::class, 'show'])
-//     ->name('classrooms.show')
-//     ->where('classrooms', '/d+');
-// // Route::get('/classrooms/{classroom:code}', [classroomsController::class, 'show'])
-// // ->name('classrooms.show')
-// // ->where('classrooms', '/d+');  //لتحديد الحقل يلي هيجي بالاستدعاء
-
-// Route::get('/classrooms/{classroom}/edit', [classroomsController::class, 'edit'])
-//     ->name('classrooms.edit')
-//     ->where('classrooms', '/d+');
-
-// Route::put('/classrooms/{classroom}', [classroomsController::class, 'update'])
-//     ->name('classrooms.update')
-//     ->where('classrooms', '/d+');
-
-// Route::delete('/classrooms/{classroom}', [classroomsController::class, 'destroy'])
-//     ->name('classrooms.destroy');
-
-
-// Route::resource('/classrooms', classroomsController::class)
-//     ->names([
-//         // 'index' => 'classrooms/index',
-//         // 'create' => 'classrooms/create',
-//     ])
-//     // ->parameters([
-//     //     '{classroom}' => '{classroom:code}',
-//     // ])
-//     ->where(['classroom' => '/d+',]); //بعرفلي كل resource يلي تم استخدامها
-//بقدر استدعي اكتر من ريسورس بنفس الجملة
-
-
-
-
 Route::get('/classrooms/trashed', [classroomsController::class, 'trashed'])
     ->name('classrooms.trashed');
 Route::put('/classrooms/trashed/{classroom}', [classroomsController::class, 'restore'])
@@ -98,6 +55,8 @@ Route::delete('/classrooms/trashed/{classroom}', [classroomsController::class, '
 
 Route::get('plans', [PlanController::class, 'index'])
     ->name('plans');
+
+
 
 Route::middleware(['auth', ApplyUserPreferences::class])->group(function () {
 
@@ -110,10 +69,10 @@ Route::middleware(['auth', ApplyUserPreferences::class])->group(function () {
     Route::post('payments', [PaymentsController::class, 'store'])
         ->name('payments.store');
 
-    Route::get('payments/success', [PaymentsController::class, 'seccess'])
+    Route::get('payments/{subscription}/success', [PaymentsController::class, 'seccess'])
         ->name('paymnets.seccess');
 
-    Route::get('payments/cancel', [PaymentsController::class, 'cancel'])
+    Route::get('payments/{subscription}/cancel', [PaymentsController::class, 'cancel'])
         ->name('paymnets.cancel');
 
     Route::prefix('/topics/trashed')
@@ -170,56 +129,7 @@ Route::middleware(['auth', ApplyUserPreferences::class])->group(function () {
     // Route::get('classrooms/{classroom}/Classworks');
 });
 
-
-// Route::get('/topics/trashed', [TopicsController::class, 'trashed'])
-//     ->name('topics.trashed');
-// Route::put('/topics/trashed/{topic}', [TopicsController::class, 'restore'])
-//     ->name('topics.restore');
-// Route::delete('/topics/trashed/{topic}', [TopicsController::class, 'force-delete'])
-//     ->name('topics.force-delete');
-
-
-
-
-
-// Topics
-
-// Route::get('/topics', [TopicsController::class, 'index'])
-//     ->name('topics.index');
-
-// Route::get('/topics/create', [TopicsController::class, 'create'])
-//     ->name('topics.create');
-
-// Route::post('/topics', [TopicsController::class, 'store'])
-//     ->name('topics.store');
-
-// Route::get('/topics/{topic}', [TopicsController::class, 'show'])
-//     ->name('topics.show')
-//     ->where('topics', '/d+');
-// // Route::get('/topics/{topic:code}', [TopicsController::class, 'show'])
-// // ->name('topics.show')
-// // ->where('topics', '/d+');  //لتحديد الحقل يلي هيجي بالاستدعاء
-
-// Route::get('/topics/{topic}/edit', [TopicsController::class, 'edit'])
-//     ->name('topics.edit')
-//     ->where('topics', '/d+');
-
-// Route::put('/topics/{topic}', [TopicsController::class, 'update'])
-//     ->name('topics.update')
-//     ->where('topics', '/d+');
-
-// Route::delete('/topics/{topic}', [TopicsController::class, 'destroy'])
-//     ->name('topics.destroy');
-
-
-// Route::get('/loginn', [LoginController::class, 'create'])
-//     ->name('loginm')
-//     ->middleware('guest');
-// Route::post('/login', [LoginController::class, 'store'])
-//     ->middleware('guest');
-
-
-
+ Route::post('/payments/srtipe/webhook', Stripecontroller::class);
 
 
 
