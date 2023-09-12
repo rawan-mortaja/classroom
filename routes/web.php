@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\TwoFactorAuthenticationController;
 use App\Http\Controllers\CheckoutsController;
 use App\Http\Controllers\ClassroomPeopleController;
 use App\Http\Controllers\classroomsController;
@@ -34,9 +35,15 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
+Route::get('/admin/2fa' , [TwoFactorAuthenticationController::class , 'create'])
+    ->name('two-factor.enable');
+
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -58,7 +65,7 @@ Route::get('plans', [PlanController::class, 'index'])
 
 
 
-Route::middleware(['auth', ApplyUserPreferences::class])->group(function () {
+Route::middleware(['auth:web,admin', ApplyUserPreferences::class])->group(function () {
 
     Route::get('subscriptions/{subscription}/pay', [PaymentsController::class, 'create'])
         ->name('checkout');
@@ -120,13 +127,6 @@ Route::middleware(['auth', ApplyUserPreferences::class])->group(function () {
     Route::get('submissions/{submission}/file', [SubmissionController::class, 'file'])
         ->name('submission.file');
 
-
-
-
-    // Route::resource('classrooms.classworks' , ClassworksController::class)
-    // ->shallow();
-
-    // Route::get('classrooms/{classroom}/Classworks');
 });
 
  Route::post('/payments/srtipe/webhook', Stripecontroller::class);
