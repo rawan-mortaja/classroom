@@ -135,4 +135,4 @@ Route::middleware(['auth:web,admin', ApplyUserPreferences::class])->group(functi
 
 
 
-require __DIR__ . '/auth.php';
+// require __DIR__ . '/auth.php';

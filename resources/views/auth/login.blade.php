@@ -9,7 +9,7 @@
         <div>
             <x-input-label for="{{ config('fortify.username') }}" :value="__('Username/Email')" />
             <x-text-input id="{{ config('fortify.username') }}" class="block mt-1 w-full" type="text"
-                name="{{ config('fortify.username') }}" :value="old('email')" required autofocus
+                name="{{ config('fortify.username') }}" :value="old( config('fortify.username') )" required autofocus
                 autocomplete="{{ config('fortify.username') }}" />
             <x-input-error :messages="$errors->get(config('fortify.username'))" class="mt-2" />
         </div>

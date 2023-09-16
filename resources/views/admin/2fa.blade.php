@@ -9,12 +9,17 @@
 </head>
 
 <body>
-    @if (!Auth::guard('admin')->user()->two_factor_secret)
+    @if (!$user->two_factor_secret)
         <form action="{{ route('two-factor.enable') }}" method="post">
             @csrf
             <button class="btn btn-primary">Enable 2FA</button>
         </form>
-    @else
+    @elseif(!$user->two_factor_confirme_at)
+        @if(session('status') == 'two-factor-authentication-enable')
+            <div class="mb-4 font-media text-sm">
+                Please finish configuring two factor authentication below
+            </div>
+            {!! $user->twoFactorQrCodeSvg !!}
         <form action="{{ route('two-factor.diable') }}" method="post">
             @csrf
             @method('delete')

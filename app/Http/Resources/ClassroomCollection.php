@@ -27,7 +27,7 @@ class ClassroomCollection extends ResourceCollection
                     'room' => $model->room,
                     'subject' => $model->subject,
                     'cover_image_url' => $model->cover_image_url,
-                    'students_count' => $model->syudents_count ?? 0,
+                    'students_count' => $model->sudents_count ?? 0,
                     'theme' => $model->theme,
                 ],
                 'user' => [
