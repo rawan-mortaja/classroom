@@ -3,11 +3,11 @@
 namespace App\Jobs;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Notification;
 
 class SendClassroomNotification implements ShouldQueue
 {
@@ -16,7 +16,7 @@ class SendClassroomNotification implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct()
+    public function __construct(protected $users, protected $notification)
     {
         //
     }
@@ -26,6 +26,12 @@ class SendClassroomNotification implements ShouldQueue
      */
     public function handle(): void
     {
-        //
+        sleep(20);
+        Notification::send($this->users, $this->notification);
+    }
+    
+    public function onQueue($queue)
+    {
+        return 'notification';
     }
 }
