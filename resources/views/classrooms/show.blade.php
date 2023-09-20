@@ -31,16 +31,21 @@
                 <div class="border rounded p-3 text-center mb-3">
                     <span class="text-success fs-3 ">{{ $classroom->code }}</span>
                 </div>
-                <div class="border rounded p-3 text-center ">
+                <div class="border rounded p-3 text-center mb-3 ">
                     <p> <span class="text-success fs-5 text-bold">Join Classroom</span> <br>
                         <a href="{{ $invitation_link }}">Check here</a>
+                    </p>
+                </div>
+                <div class="border rounded p-3 text-center mb-3 ">
+                    <p> <span class="text-success fs-5 text-bold">Chat Classroom</span> <br>
+                        <a class="btn btn-secondary mt-3" href="{{ route('classrooms.chat', $classroom->id) }}">Chat</a>
                     </p>
                 </div>
             </div>
             <div class="col-md-9">
                 @foreach ($classroom->stream as $stream)
                     <div class="card card-background-mask-light align-items-start mt-4 p-2">
-                        <a href="{{ $stream->link}}">
+                        <a href="{{ $stream->link }}">
                             <h6 class="card-text flex-1 m-3 " style="bold">
                                 <i class="fa fa-file-text badge-primary" aria-hidden="true" style="margin-right: 10px;"></i>
                                 {{ $stream->content }}

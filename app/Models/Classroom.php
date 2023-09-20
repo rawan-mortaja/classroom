@@ -193,6 +193,12 @@ class Classroom extends Model
 
     }
 
+    public function messages()
+    {
+        return $this->morphMany(Message::class , 'recipient');
+    }
+
+    
 
     //get{ATTRIBUTENAME}Attribute
     public function getNameAttribute($value)

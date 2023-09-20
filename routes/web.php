@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\TwoFactorAuthenticationController;
+use App\Http\Controllers\Api\V1\ClassroomsController as V1ClassroomsController;
 use App\Http\Controllers\CheckoutsController;
 use App\Http\Controllers\ClassroomPeopleController;
 use App\Http\Controllers\classroomsController;
@@ -35,8 +36,7 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-Route::get('/admin/2fa' , [TwoFactorAuthenticationController::class , 'create'])
-    ->name('two-factor.enable');
+Route::get('/admin/2fa', [TwoFactorAuthenticationController::class, 'create']);
 
 
 Route::get('/dashboard', function () {
@@ -63,9 +63,8 @@ Route::delete('/classrooms/trashed/{classroom}', [classroomsController::class, '
 Route::get('plans', [PlanController::class, 'index'])
     ->name('plans');
 
-
-
 Route::middleware(['auth:web,admin', ApplyUserPreferences::class])->group(function () {
+
 
     Route::get('subscriptions/{subscription}/pay', [PaymentsController::class, 'create'])
         ->name('checkout');
@@ -99,7 +98,8 @@ Route::middleware(['auth:web,admin', ApplyUserPreferences::class])->group(functi
         ->name('classrooms.join');
     Route::post('/classrooms/{classroom}/join', [JoinClassroomController::class, 'store']);
 
-
+    Route::get('/calssrooms/{classroom}/chat', [classroomsController::class, 'chat'])
+    ->name('classrooms.chat');
 
     Route::resources([
         'topics' => TopicsController::class,
@@ -126,10 +126,9 @@ Route::middleware(['auth:web,admin', ApplyUserPreferences::class])->group(functi
 
     Route::get('submissions/{submission}/file', [SubmissionController::class, 'file'])
         ->name('submission.file');
-
 });
 
- Route::post('/payments/srtipe/webhook', Stripecontroller::class);
+Route::post('/payments/srtipe/webhook', Stripecontroller::class);
 
 
 

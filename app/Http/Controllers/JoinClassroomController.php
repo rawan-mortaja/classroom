@@ -75,4 +75,6 @@ class JoinClassroomController extends Controller
             throw new Exception('User already joined the classroom');
         }
     }
+
+
 }

@@ -45,7 +45,7 @@ class FortifyServiceProvider extends ServiceProvider
                 if ($user instanceof Admin) {
                     return redirect('admin/2fa');
                 }
-                return redirect()->instended(route('classrooms.index'));
+                return redirect()->route('classrooms.index');
             }
         };
 

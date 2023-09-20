@@ -390,4 +390,14 @@ class classroomsController extends Controller
             ->route('classrooms.trashed')
             ->with('success', "Classroom  ({ $classroom->name }) deleted forever");
     }
+
+    public function chat(Classroom $classroom)
+    {
+        return view(
+            'classrooms.chat',
+            [
+                'classroom' => $classroom,
+            ]
+        );
+    }
 }
