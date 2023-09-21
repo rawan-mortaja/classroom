@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Admin;
 use App\Models\Classroom;
 use App\Models\classwork;
 use App\Models\Post;
@@ -40,8 +41,9 @@ class AppServiceProvider extends ServiceProvider
         Relation::enforceMorphMap([
             'classwork' => classwork::class,
             'Post' => Post::class,
-            'user' =>User::class,
+            'user' => User::class,
             'classroom' => Classroom::class,
+            'admin' => Admin::class,
         ]);
     }
 }

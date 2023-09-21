@@ -12,6 +12,7 @@ use Illuminate\Notifications\Messages\DatabaseMessage;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Messages\VonageMessage;
 use Illuminate\Notifications\Notification;
+use NotificationChannels\Fcm\FcmChannel;
 use NotificationChannels\Fcm\FcmMessage;
 use NotificationChannels\Fcm\Resources\AndroidFcmOptions;
 use NotificationChannels\Fcm\Resources\AndroidNotification;
@@ -139,12 +140,22 @@ class NewClassworkNotification extends Notification implements ShouldQueue
 
     public function toFcm($notifiable)
     {
+        $content = __(':name posted a new :type : :title', [
+            'name' => $this->classwork->user->name,
+            'type' => __($this->classwork->type->value),
+            'title' => $this->classwork->title,
+        ]);
+
         return FcmMessage::create()
-            ->setData(['data1' => 'value', 'data2' => 'value2'])
-            ->setNotification(\NotificationChannels\Fcm\Resources\Notification::create()
-                ->setTitle('Account Activated')
-                ->setBody('Your account has been activated.')
-                ->setImage('http://example.com/url-to-image-here.png'))
+            ->setData([
+                'classwork_id' => "{$this->classwork->id}",
+                'user_id' => "{$this->classwork->user_id}",
+            ])
+            ->setNotification(
+                \NotificationChannels\Fcm\Resources\Notification::create()
+                    ->setTitle('New Classwork')
+                    ->setBody($content)
+            )
             ->setAndroid(
                 ApnsConfig::create()
                     ->setFcmOptions(AndroidFcmOptions::create()->setAnalyticsLabel('analytics'))

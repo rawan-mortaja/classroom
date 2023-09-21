@@ -14,7 +14,9 @@
             </div>
             <div class="col-md-9">
                 <div id="messages" class="border rounded bg-light p-3 mb-3">
+
                 </div>
+                <div id="whisper" class="text-sm fs-5 text-muted"></div>
                 <form class="row g-3 align-items-center" id="message-form">
                     <div class="col-12">
                         <label class="visually-hidden" for="body">Username</label>
@@ -33,9 +35,8 @@
 @endsection
 
 @push('scripts')
-{{-- <script src="jquery.min.js"></script> --}}
+    {{-- <script src="jquery.min.js"></script> --}}
 
-    <script src="https://ajax.googleapis.com/ajax/libs/d3js/7.8.5/d3.min.js"></script>
     <script>
         const messages = {
             list_url: "{{ route('classrooms.messages.index', [$classroom->id]) }}",
@@ -43,6 +44,7 @@
         };
         const csrf_token = "{{ csrf_token() }}";
         const user = {
+            id: "{{ Auth::id() }}"
             name: "{{ Auth::user()->name }}"
         };
         const calssroom = "{{ $classroom->id }}";

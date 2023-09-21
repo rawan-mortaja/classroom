@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\V1\AccessTokensController;
 use App\Http\Controllers\Api\V1\ClassroomsController;
 use App\Http\Controllers\Api\V1\ClassroomsMessagesController;
 use App\Http\Controllers\Api\V1\ClassworksController;
+use App\Http\Controllers\Api\V1\DevicesController;
 use App\Http\Controllers\Api\V1\MessagesController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -27,6 +28,7 @@ Route::middleware('auth:sanctum')->group(function () {
         return $request->user();
     });
 
+    Route::post('devices' , [DevicesController::class, 'store']);
 
     Route::get('auth/access-tokens', [AccessTokensController::class, 'index']);
     Route::delete('auth/access-tokens/{id?}', [AccessTokensController::class, 'destroy']);
